@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/14 06:24:48 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/15 01:08:13 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(void)
 	{
 		str = readline("path > ");
 		if (str)
-			printf("[%d] %s\n", ft_strlen(str), str);
+			printf("[%d] %s\n", (int)ft_strlen(str), str);
 		else
 			break ;
 		add_history(str);
