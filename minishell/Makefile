@@ -6,18 +6,22 @@
 #    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/14 06:40:47 by sujo             ###   ########.fr        #
+#    Updated: 2022/01/16 17:08:47 by sujo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=gcc
 SRC_DIR=./src/
 SRCS=src/main.c
-OBJS=$(SRCS:.c=.o)
+
+ENV_DIR=./src/envp/
+ENVS=src/envp/env_split.c src/envp/envp.c
+
+OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o)
 NAME=minishell
 HEADER=-I include/
 #CFLAG=-Wall -Werror -Wextra
-CFLAG=
+CFLAG=-fsanitize=address
 LIBFT_DIR=./libft
 LIBFT_NAME=libft.a
 
@@ -32,6 +36,9 @@ $(LIBFT_NAME):
 	mv $(LIBFT_DIR)/$(LIBFT_NAME) .
 
 $(SRC_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+
+$(ENV_DIR)%.o: $(ENV_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 clean:

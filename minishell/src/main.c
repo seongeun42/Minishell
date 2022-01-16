@@ -6,16 +6,19 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/15 01:08:13 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 17:28:53 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
 	char *str;
+	t_env *env;
 
+	env = NULL;
+	env_parsing(envp, &env);
 	while(1)
 	{
 		str = readline("path > ");

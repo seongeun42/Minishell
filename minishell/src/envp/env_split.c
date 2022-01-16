@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:07:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/16 16:57:34 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 17:31:19 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	**go_free_split(char **str)
 
 static int	count_str_length(char *str, int start, char end)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	while (str[start] && str[start] != end)
