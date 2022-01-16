@@ -6,15 +6,15 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 15:48:07 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/03 15:52:43 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:01:48 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
-	int result;
+	int	result;
 
 	result = c;
 	if ('A' <= c && c <= 'Z')

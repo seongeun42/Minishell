@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 19:37:21 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/05 11:47:52 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:02:55 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	char *ptr;
+	char	*ptr;
 
 	ptr = (char *)s;
 	while (*ptr != (char)c)

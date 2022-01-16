@@ -6,16 +6,16 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 12:14:25 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/03 22:09:15 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 14:57:48 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int result;
-	int positive;
+	int	result;
+	int	positive;
 
 	result = 0;
 	positive = 1;

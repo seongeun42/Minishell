@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42soul.kr>              +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 14:32:02 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/07 11:21:03 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 14:58:17 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned char *result;
+	unsigned char	*result;
 
 	result = (unsigned char *)malloc(nmemb * size);
 	if (!result)

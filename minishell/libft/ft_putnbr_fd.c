@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 19:31:49 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/05 19:46:51 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:02:42 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	func(long long nbr, int fd)
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long long nbr;
+	long long	nbr;
 
 	nbr = n;
 	if (nbr < 0)
