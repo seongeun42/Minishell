@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 15:30:20 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/06 22:08:29 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:01:38 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_str_copy_1(char *dest, char const *src, size_t left, size_t right)
 {
-	size_t idx;
+	size_t	idx;
 
 	idx = 0;
 	while (left <= right)
@@ -27,10 +27,10 @@ void	ft_str_copy_1(char *dest, char const *src, size_t left, size_t right)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t		s1_len;
-	size_t		left;
-	size_t		right;
-	char		*result;
+	size_t	s1_len;
+	size_t	left;
+	size_t	right;
+	char	*result;
 
 	if (!s1 || !set)
 		return ((char *)s1);

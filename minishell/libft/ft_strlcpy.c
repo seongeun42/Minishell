@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 21:59:03 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/06 22:11:14 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:00:50 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	size_t idx;
+	size_t	idx;
 
 	if (!dest || !src)
 		return (0);

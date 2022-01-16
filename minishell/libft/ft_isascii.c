@@ -6,13 +6,13 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 12:46:19 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/03 15:24:27 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 14:58:52 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isascii(int c)
+int	ft_isascii(int c)
 {
 	if (0 <= c && c < 128)
 		return (1);

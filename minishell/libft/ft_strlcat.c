@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 16:02:02 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/03 21:24:05 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:00:45 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	size_t idx;
+	size_t	idx;
 
 	idx = 0;
 	while (*dest && idx < size)

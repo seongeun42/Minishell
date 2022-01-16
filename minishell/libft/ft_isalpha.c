@@ -6,13 +6,13 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 12:19:02 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/03 17:01:21 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 14:58:48 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	if ('a' <= c && c <= 'z')
 		return (1);

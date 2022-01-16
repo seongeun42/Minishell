@@ -6,16 +6,16 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 16:19:10 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/06 21:42:39 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 14:59:31 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		num_size(int n)
+int	num_size(int n)
 {
-	int digit;
-	int cnt;
+	int	digit;
+	int	cnt;
 
 	cnt = 1;
 	digit = 1;
@@ -54,9 +54,9 @@ void	get_str(char *str, int minus, int len, int n)
 
 char	*ft_itoa(int n)
 {
-	char		*result;
-	int			len;
-	int			minus;
+	char	*result;
+	int		len;
+	int		minus;
 
 	minus = 0;
 	if (n == -2147483648)

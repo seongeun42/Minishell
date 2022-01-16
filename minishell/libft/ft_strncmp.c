@@ -6,16 +6,16 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 01:00:32 by sujo              #+#    #+#             */
-/*   Updated: 2021/05/06 19:12:51 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:01:11 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char ch1;
-	unsigned char ch2;
+	unsigned char	ch1;
+	unsigned char	ch2;
 
 	while (n)
 	{
