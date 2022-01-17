@@ -19,6 +19,7 @@
 # include <stdlib.h>
 
 # include "../libft/libft.h"
+# include "parse.h"
 
 // envp struct
 typedef struct s_env
