@@ -6,7 +6,7 @@
 #    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/23 14:47:13 by sujo             ###   ########.fr        #
+#    Updated: 2022/01/23 19:16:11 by sujo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ SRC_DIR=./src/
 SRCS=src/main.c
 
 ENV_DIR=./src/envp/
-ENVS=src/envp/env_split.c src/envp/env_parsing.c src/envp/env_func.c
+ENVS=src/envp/env_split.c\
+	src/envp/env_parsing.c\
+	src/envp/env_func.c\
+	src/envp/env_insert.c
 
 OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o)
 NAME=minishell
