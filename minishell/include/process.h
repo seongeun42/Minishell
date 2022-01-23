@@ -1,48 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/01/23 16:20:15 by seongele         ###   ########.fr       */
+/*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
+/*   Updated: 2022/01/23 16:16:27 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef PROCESS_H
+# define PROCESS_H
 
-// node struct
-typedef struct s_list
+// envp struct
+typedef struct s_env
 {
-	struct s_list	*next;
-	void			*content;
-}	t_list;
-
-// string struct
-typedef struct s_str
-{
-	struct s_str	*next;
+	struct s_env	*next;
+	char			*key;
 	char			*value;
-}	t_str;
+}	t_env;
 
-// cmd struct
-typedef struct s_cmd
-{
-	struct s_cmd	*next;
-	char			**cmd;
-}	t_cmd;
-
-// flag struct
-typedef struct t_flag
-{
-	int	env_chg;
-	int	space;
-	int	bigq;
-	int	smallq;
-}	t_flag;
-
-// parse function
+// envp function
+int		env_parsing(char *envp[], t_env **list);
+char	**env_split(char const *s, char c);
+void	display_env(t_env *start);
 
 #endif
