@@ -6,24 +6,11 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 15:21:26 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/16 18:45:10 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 14:37:07 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// env에 담겨져 있는 내용을 출력
-void	display_env(t_env *start)
-{
-	t_env	*ptr;
-
-	ptr = start;
-	while (ptr != NULL)
-	{
-		printf("%s = %s\n", ptr->key, ptr->value);
-		ptr = ptr->next;
-	}
-}
 
 // 새로운 노드를 정상적으로 생성하면 0, 아니면 1 리턴
 int	env_insert_node(t_env **start, char *key_, char *value_)
