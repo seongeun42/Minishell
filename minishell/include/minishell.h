@@ -3,35 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/16 17:27:32 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 16:19:56 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <dirent.h>
+# include <signal.h>
+# include <termios.h>
+# include <termcap.h>
+# include <string.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdio.h>
-# include <stdlib.h>
-
 # include "../libft/libft.h"
+
+# include "process.h"
 # include "parse.h"
+# include "bulit_in.h"
 
-// envp struct
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*key;
-	char			*value;
-}t_env;
-
-// envp function
-int		env_parsing(char *envp[], t_env **list);
-char	**env_split(char const *s, char c);
-void	display_env(t_env *start);
+# define ERR 1
+# define OK 0
 
 #endif
