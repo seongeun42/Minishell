@@ -6,14 +6,14 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 15:21:26 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 14:37:07 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 19:44:09 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // 새로운 노드를 정상적으로 생성하면 0, 아니면 1 리턴
-int	env_insert_node(t_env **start, char *key_, char *value_)
+static int	env_insert_node(t_env **start, char *key_, char *value_)
 {
 	t_env	*new_node;
 	t_env	*ptr;

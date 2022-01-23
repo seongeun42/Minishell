@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 17:37:08 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 15:27:12 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 19:47:11 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_env_node(t_env *node)
 }
 
 // key_를 토대로 env에서 value를 찾음. 없으면 null번환
-char *search_env(t_env *start, char *key_)
+char	*search_env(t_env *start, char *key_)
 {
 	int		len;
 	t_env	*ptr;
@@ -37,7 +37,7 @@ char *search_env(t_env *start, char *key_)
 }
 
 // 환경변수를 삭제하는 경우 key를 중심으로 탐색
-void delete_env_node(t_env **start, char *key_)
+void	delete_env_node(t_env **start, char *key_)
 {
 	int		len;
 	t_env	*ptr;
@@ -57,8 +57,11 @@ void delete_env_node(t_env **start, char *key_)
 			preptr = ptr;
 			ptr = ptr->next;
 		}
-		preptr->next = ptr->next;
-		free_env_node(ptr);
+		if (ft_strncmp(ptr->key, key_, len) == 0)
+		{
+			preptr->next = ptr->next;
+			free_env_node(ptr);
+		}
 	}
 }
 
@@ -78,7 +81,7 @@ void	display_env(t_env *start)
 
 void	display_export(t_env *start)
 {
-	t_env *ptr;
+	t_env	*ptr;
 
 	ptr = start;
 	while (ptr != NULL)
@@ -86,6 +89,8 @@ void	display_export(t_env *start)
 		printf("declare -x %s", ptr->key);
 		if (ptr->value != NULL)
 			printf("=\"%s\"\n", ptr->value);
+		else
+			printf("\n");
 		ptr = ptr->next;
 	}
 }
