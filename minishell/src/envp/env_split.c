@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:07:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/16 17:31:19 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 20:06:54 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	**go_free_split(char **str)
 	return (0);
 }
 
-static int	count_str_length(char *str, int start, char end)
+static int	count_str_length(char const *str, int start, char end)
 {
 	int	result;
 

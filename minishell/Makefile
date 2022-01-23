@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/16 17:08:47 by sujo             ###   ########.fr        #
+#    Updated: 2022/01/23 20:10:45 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,14 @@ SRC_DIR=./src/
 SRCS=src/main.c
 
 ENV_DIR=./src/envp/
-ENVS=src/envp/env_split.c src/envp/envp.c
+ENVS=src/envp/env_split.c\
+	src/envp/env_parsing.c\
+	src/envp/env_func.c
 
-OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o)
+PARSE_DIR=./src/parse/
+PARS=src/parse/parsing.c
+
+OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell
 HEADER=-I include/
 #CFLAG=-Wall -Werror -Wextra
@@ -39,6 +44,9 @@ $(SRC_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 $(ENV_DIR)%.o: $(ENV_DIR)%.c
+	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+
+$(PARSE_DIR)%.o: $(PARSE_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 clean:

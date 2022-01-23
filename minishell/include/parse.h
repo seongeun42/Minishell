@@ -6,33 +6,12 @@
 /*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/01/23 16:20:15 by seongele         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:52:58 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
-
-// node struct
-typedef struct s_list
-{
-	struct s_list	*next;
-	void			*content;
-}	t_list;
-
-// string struct
-typedef struct s_str
-{
-	struct s_str	*next;
-	char			*value;
-}	t_str;
-
-// cmd struct
-typedef struct s_cmd
-{
-	struct s_cmd	*next;
-	char			**cmd;
-}	t_cmd;
 
 // flag struct
 typedef struct t_flag
@@ -44,5 +23,11 @@ typedef struct t_flag
 }	t_flag;
 
 // parse function
+t_list	*parsing(char *line, t_env* env_list);
+void	line_split(char *line, t_env *env_list, t_list **head);
+t_list	*make_node(char *line, t_env *env_list, int start, int end);
+char	*env_find(char *line, t_env *env_list, int *start);
+char	*env_substitude(char *value, char *env, int *i, int size);
+char	*memory_fit(char *value);
 
 #endif

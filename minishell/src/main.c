@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/16 17:28:53 by sujo             ###   ########.fr       */
+/*   Updated: 2022/01/23 19:57:30 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		str = readline("path > ");
 		if (str)
+		{
 			printf("[%d] %s\n", (int)ft_strlen(str), str);
+			parsing(str, env);
+		}
 		else
 			break ;
 		add_history(str);
