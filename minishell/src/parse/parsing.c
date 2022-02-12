@@ -12,10 +12,17 @@
 
 #include "minishell.h"
 
+// 1. redirect와 pipe 양 옆에 공백 넣어주는 처리
+// 2. parsing 할 때, cmd와 redirect 나눠서 리스트 만들기
+// 3. | 나오면 새로운 cmd와 redirect
+
 t_list	*parsing(char *line, t_env* env_list)
 {
 	t_list	*str;
 	t_list	*cmd;
+	t_list	*redi;
+
+	// redirect과 pipe 사이에 공백 없으면 넣어주는 처리
 
 	// // test code
 
@@ -31,6 +38,7 @@ t_list	*parsing(char *line, t_env* env_list)
 	// str = ft_lstnew(0);
 	// cmd = ft_lstnew(0);
 	// line_split(line, env_list, &str);
+
 	// // cmd 리스트 만들기
 
 	// printf("str size: %d\n", ft_lstsize(str));
@@ -42,6 +50,70 @@ t_list	*parsing(char *line, t_env* env_list)
 	// }
 
 	return (cmd);
+}
+
+int	redirect_pipe_count(char *line)
+{
+	int		i;
+	int		cnt;
+	
+	cnt = 0;
+	i = -1;
+	while (++i)
+	{
+		if (line[i] == '<')
+		{
+			cnt++;
+			if (line[i + 1] == '<')
+				i++;
+		}
+		else if (line[i] == '>')
+		{
+			cnt++;
+			if (line[i + 1] == '>')
+				i++;
+		}
+		else if (line[i] == '|')
+			cnt++;
+	}
+	return (cnt);
+}
+
+// echo ">>" >>a> b >c >d<e<<g >k |cat -e
+char *redirect_pipe_space_add(char *line)
+{
+	char	*new_line;
+	int		i;
+	int		cnt;
+	
+	cnt = redirect_pipe_count(line);
+	new_line = (char *)malloc(sizeof(char) + (1 + ft_strlen(line) + cnt * 2));
+	if (!new_line)
+		return ERR;
+	i = 0;
+	while (*line)
+	{
+		if (*line == '<')
+		{
+			if (i > 0 && new_line[i - 1] != ' ')
+				new_line[i++] = ' ';
+			new_line[i++] = '<';
+			if (*(line + 1) == '<')
+				new_line[i++] = '<';
+		}
+		else if (*line == '>')
+		{
+
+			if (*(line + 1) == '>')
+				i++;
+		}
+		else if (*line == '|')
+		{
+
+		}
+		else
+			new_line[i++] = *line++;
+	}
 }
 
 static void	line_split_flag_change(char c, t_flag* f)
@@ -195,6 +267,8 @@ char	*memory_fit(char *value)
 
 	size = ft_strlen(value);
 	new_value = (char *)malloc(sizeof(char) * (size + 1));
+	if (!new_value)
+		return ERR;
 	ft_strlcpy(new_value, value, size + 1);
 	free(value);
 	return (new_value);

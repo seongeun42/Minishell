@@ -30,4 +30,5 @@ char	*env_find(char *line, t_env *env_list, int *start);
 char	*env_substitude(char *value, char *env, int *i, int size);
 char	*memory_fit(char *value);
 
+
 #endif
