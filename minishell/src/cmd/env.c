@@ -6,13 +6,13 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:01:29 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 17:02:02 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 18:27:26 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(t_env *start)
+void	ft_env(t_env *start)
 {
 	display_env(start);
 }

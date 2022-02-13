@@ -6,13 +6,13 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:39:48 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 18:08:00 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 18:27:22 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset(t_env *start, char **key)
+void	ft_unset(t_env *start, char **key)
 {
 	int idx;
 
