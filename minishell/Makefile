@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/23 19:16:11 by sujo             ###   ########.fr        #
+#    Updated: 2022/01/23 20:10:45 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,10 @@ ENVS=src/envp/env_split.c\
 	src/envp/env_func.c\
 	src/envp/env_insert.c
 
-OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o)
+PARSE_DIR=./src/parse/
+PARS=src/parse/parsing.c
+
+OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell
 HEADER=-I include/
 #CFLAG=-Wall -Werror -Wextra
@@ -42,6 +45,9 @@ $(SRC_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 $(ENV_DIR)%.o: $(ENV_DIR)%.c
+	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+
+$(PARSE_DIR)%.o: $(PARSE_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 clean:
