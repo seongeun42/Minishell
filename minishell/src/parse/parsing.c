@@ -1,16 +1,164 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
+/*   Updated: 2022/01/23 20:52:57 by seongele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+// 1. redirect와 pipe 양 옆에 공백 넣어주는 처리
+// 2. parsing 할 때, cmd와 redirect 나눠서 리스트 만들기
+// 3. | 나오면 새로운 cmd와 redirect
 
 t_list	*parsing(char *line, t_env* env_list)
 {
 	t_list	*str;
 	t_list	*cmd;
+	t_list	*redi;
 
-	str = ft_lstnew(0);
-	cmd = ft_lstnew(0);
-	line_split(line, env_list, &str);
-	// cmd 리스트 만들기
+	// redirect과 pipe 사이에 공백 없으면 넣어주는 처리
+
+	// // test code
+
+	// t_env* tmp;
+
+	// tmp = (t_env *)malloc(sizeof(t_env) * 3);
+	// tmp[0].key = "a";
+	// tmp[0].value = "aaaa";
+	// tmp[1].key = "b";
+	// tmp[1].value = "hi";
+	// tmp[2].key = 0;
+	// tmp[2].value = 0;
+	// str = ft_lstnew(0);
+	// cmd = ft_lstnew(0);
+	// line_split(line, env_list, &str);
+
+	// // cmd 리스트 만들기
+
+	// printf("str size: %d\n", ft_lstsize(str));
+	// t_list *cur = str->next;
+	// for (int i = 0; cur; i++)
+	// {
+	// 	printf("%d: %s\n", i, (char *)cur->content);
+	// 	cur = cur->next;
+	// }
 
 	return (cmd);
+}
+
+int	redirect_pipe_count(char *line)
+{
+	int		i;
+	int		cnt;
+	
+	cnt = 0;
+	i = -1;
+	while (++i)
+	{
+		if (line[i] == '<')
+		{
+			cnt++;
+			if (line[i + 1] == '<')
+				i++;
+		}
+		else if (line[i] == '>')
+		{
+			cnt++;
+			if (line[i + 1] == '>')
+				i++;
+		}
+		else if (line[i] == '|')
+			cnt++;
+	}
+	return (cnt);
+}
+
+// echo ">>" >>a> b >c >d<e<<g >k |cat -e
+char *redirect_pipe_space_add(char *line)
+{
+	char	*new_line;
+	int		i;
+	int		cnt;
+	
+	cnt = redirect_pipe_count(line);
+	new_line = (char *)malloc(sizeof(char) + (1 + ft_strlen(line) + cnt * 2));
+	if (!new_line)
+		return ERR;
+	i = 0;
+	while (*line)
+	{
+		if (*line == '<')
+		{
+			if (i > 0 && new_line[i - 1] != ' ')
+				new_line[i++] = ' ';
+			new_line[i++] = '<';
+			if (*(line + 1) == '<')
+				new_line[i++] = '<';
+		}
+		else if (*line == '>')
+		{
+
+			if (*(line + 1) == '>')
+				i++;
+		}
+		else if (*line == '|')
+		{
+
+		}
+		else
+			new_line[i++] = *line++;
+	}
+}
+
+static void	line_split_flag_change(char c, t_flag* f)
+{
+	if (c == '"' && !f->bigq && !f->smallq)
+	{
+		f->bigq = 1;
+		f->space = 0;
+	}
+	else if (c == '"' && f->bigq)
+	{
+		f->bigq = 0;
+		f->space = 1;
+	}
+	else if (c == '\'' && !f->smallq && !f->bigq)
+	{
+		f->smallq = 1;
+		f->space = 0;
+	}
+	else if (c == '\'' && f->smallq)
+	{
+		f->smallq = 0;
+		f->space = 1;
+	}
+}
+
+
+static void	make_node_flag_change(char c, t_flag* f, char *value, int *i)
+{
+	if (c == '"' && !f->bigq && !f->smallq)
+		f->bigq = 1;
+	else if (c == '"' && f->bigq)
+		f->bigq = 0;
+	else if (c == '\'' && !f->smallq && !f->bigq)
+	{
+		f->smallq = 1;
+		f->env_chg = 0;
+	}
+	else if (c == '\'' && f->smallq)
+	{
+		f->smallq = 0;
+		f->env_chg = 1;
+	}
+	else
+		value[(*i)++] = c;
 }
 
 void	line_split(char *line, t_env *env_list, t_list **head)
@@ -19,7 +167,7 @@ void	line_split(char *line, t_env *env_list, t_list **head)
 	int		start;
 	int		current;
 
-	f = {1, 1, 0, 0};
+	f = (t_flag){1, 1, 0, 0};
 	start = 0;
 	while (line[start] == ' ')
 		++start;
@@ -28,73 +176,37 @@ void	line_split(char *line, t_env *env_list, t_list **head)
 	{
 		if (f.space && line[current] == ' ')
 		{
-			// make_new_node()로 새로운 노드 만들어서 str리스트에 연결
 			ft_lstadd_back(head, make_node(line, env_list, start, current));
-			start = current + 1;
+			while (line[current] == ' ')
+				++current;
+			start = current;
+			--current;
 		}
-		else if (line[current] == '"' && !f.bigq && !f.smallq)
-		{
-			f.bigq = 1;
-			f.space = 0;
-		}
-		else if (line[current] == '"' && f.bigq)
-		{
-			f.bigq = 0;
-			f.space = 1;
-		}
-		else if (line[current] == '\'' && !f.smallq && !f.bigq)
-		{
-			f.smallq = 1;
-			f.space = 0;
-		}
-		else if (line[current] == '\'' && f.smallq)
-		{
-			f.smallq = 0;
-			f.space = 1;
-		}
+		else if (line[current] == '"' || line[current] == '\'')
+			line_split_flag_change(line[current], &f);
 	}
-	ft_lstadd_back(head, make_node(line, env_list, start, current));
+	if (start != current)
+		ft_lstadd_back(head, make_node(line, env_list, start, current));
 }
 
-// 환경변수의 경우, 공백or"or'이 나올 때까지를 key로 봄
-// export ab=kk라고 했을 때
-// echo "abc  $abkk hi"
-// 라고 하면 [abc   hi]라고 출력됨
-// $abkk로 인식한 것
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
 {
 	char	*value;
 	int		i;
 	t_flag	f;
 
-	f = {1, 1, 0, 0};
-	// 환경변수 치환할 거 생각해서 1024 더 크게 잡았음
-	// 환경변수 값이 저거보다 더 크면... 생각해봐야 함..
-	// 값 더 크면 새로 동적할당하는 함수 추가..?
-	value = (char *)malloc(sizeof(char) * ((end - start) + 1025));
+	f = (t_flag){1, 1, 0, 0};
+	value = (char *)malloc(sizeof(char) * (end - start + 1));
 	if (!value)
 		return (0);
 	i = 0;
 	while (start < end)
 	{
 		if (f.env_chg && line[start] == '$')
-			env_substitude(value, env_find(line, env_list, &start), &i);
-		else if (line[start] == '"' && !f.bigq && !f.smallq)
-			f.bigq = 1;
-		else if (line[start] == '"' && f.bigq)
-			f.bigq = 0;
-		else if (line[start] == '\'' && !f.smallq && !f.bigq)
-		{
-			f.smallq = 1;
-			f.env_chg = 0;
-		}
-		else if (line[start] == '\'' && f.smallq)
-		{
-			f.smallq = 0;
-			f.env_chg = 1;
-		}
+			value = env_substitude(value,
+				env_find(line, env_list, &start), &i, end - start);
 		else
-			value[i++] = line[start];
+			make_node_flag_change(line[start], &f, value, &i);
 		++start;
 	}
 	value[i] = 0;
@@ -120,33 +232,44 @@ char	*env_find(char *line, t_env *env_list, int *start)
 	while (++i < *start)
 		key[++j] = line[i];
 	key[++j] = 0;
+	printf("key: %s\n", key);
 	env = search_env(env_list, key);
+	printf("v: %s\n", env);
 	free(key);
 	// 공백을 가리키는 상태에서 밖에서 ++되면 공백 하나 패스하게 되니까
 	*start -= 1;
 	return(env);
 }
 
-void	env_substitude(char *value, char *env, int *i)
+char	*env_substitude(char *value, char *env, int *i, int size)
 {
 	char	*tmp;
+	char	*new_v;
 
 	tmp = env;
 	if (!tmp)
-		return ;
+		return (value);
 	else
-		while (*tmp)
-			value[(*i)++] = *tmp++;
+	{
+		new_v = (char *)malloc(sizeof(char) * (size + ft_strlen(env) + 1));
+		ft_strlcpy(new_v, value, *i + 1);
+		ft_strlcat(new_v, env, size + ft_strlen(env) * 2);
+		*i += ft_strlen(env) + 1;
+		free(value);
+	}
+	return (new_v);
 }
 
 char	*memory_fit(char *value)
 {
-	char	*new_str;
+	char	*new_value;
 	int		size;
 
 	size = ft_strlen(value);
-	new_str = (char *)malloc(sizeof(char) * (size + 1));
-	ft_strlcpy(new_str, value, size + 1);
+	new_value = (char *)malloc(sizeof(char) * (size + 1));
+	if (!new_value)
+		return ERR;
+	ft_strlcpy(new_value, value, size + 1);
 	free(value);
-	return (new_str);
+	return (new_value);
 }
