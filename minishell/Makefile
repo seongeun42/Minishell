@@ -17,7 +17,8 @@ SRCS=src/main.c
 ENV_DIR=./src/envp/
 ENVS=src/envp/env_split.c\
 	src/envp/env_parsing.c\
-	src/envp/env_func.c
+	src/envp/env_func.c\
+	src/envp/env_insert.c
 
 PARSE_DIR=./src/parse/
 PARS=src/parse/parsing.c
