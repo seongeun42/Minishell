@@ -6,11 +6,22 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 15:21:26 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 19:44:09 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 14:59:00 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**double_free_split(char **str)
+{
+	size_t	idx;
+
+	idx = 0;
+	while (str[idx])
+		free(str[idx++]);
+	free(str);
+	return (0);
+}
 
 // 새로운 노드를 정상적으로 생성하면 0, 아니면 1 리턴
 static int	env_insert_node(t_env **start, char *key_, char *value_)
@@ -40,13 +51,18 @@ static int	env_insert_node(t_env **start, char *key_, char *value_)
 int	env_parsing(char *envp[], t_env **list)
 {
 	char	**tmp;
+	char	*key;
+	char	*value;
 
 	while (*envp)
 	{
 		tmp = env_split((const char *)*envp, '=');
 		if (tmp == 0)
 			return (1);
-		if (env_insert_node(list, tmp[0], tmp[1]))
+		key = ft_strdup(tmp[0]);
+		value = ft_strdup(tmp[1]);
+		double_free_split(tmp);
+		if (env_insert_node(list, key, value))
 			return (1);
 		envp++;
 	}

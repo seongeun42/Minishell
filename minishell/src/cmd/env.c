@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 14:07:18 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 14:53:59 by sujo             ###   ########.fr       */
+/*   Created: 2022/02/13 17:01:29 by sujo              #+#    #+#             */
+/*   Updated: 2022/02/13 18:39:40 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void	ft_env(t_env *start)
 {
-	char	*result;
-	size_t	idx;
-
-	if (s == NULL)
-		return (0);
-	idx = 0;
-	result = (char *)malloc(ft_strlen(s) + 1);
-	if (!result)
-		return (0);
-	while (s[idx] != '\0')
+	if (search_env(start, "PATH") == NULL)
 	{
-		result[idx] = s[idx];
-		idx++;
+		printf("bash: env: No such file or directory\n");
+		return ;
 	}
-	result[idx] = '\0';
-	return (result);
+	display_env(start);
 }

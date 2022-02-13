@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 14:07:18 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 14:53:59 by sujo             ###   ########.fr       */
+/*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
+/*   Updated: 2022/02/13 18:29:48 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+int	ft_export(t_env *start, char **str)
 {
-	char	*result;
-	size_t	idx;
+	int idx;
 
-	if (s == NULL)
-		return (0);
-	idx = 0;
-	result = (char *)malloc(ft_strlen(s) + 1);
-	if (!result)
-		return (0);
-	while (s[idx] != '\0')
+	if (str == NULL)
+		display_export(start);
+	else
 	{
-		result[idx] = s[idx];
-		idx++;
+		idx = 0;
+		while (str[idx])
+		{
+			if(cmd_insert_env_node(&start, str[idx]))
+				return (ERR);
+			idx++;
+		}
 	}
-	result[idx] = '\0';
-	return (result);
+	return (OK);
 }

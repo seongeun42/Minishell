@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/04 14:07:18 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 14:53:59 by sujo             ###   ########.fr       */
+/*   Created: 2022/02/13 17:39:48 by sujo              #+#    #+#             */
+/*   Updated: 2022/02/13 18:39:15 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void	ft_unset(t_env *start, char **key)
 {
-	char	*result;
-	size_t	idx;
+	int idx;
 
-	if (s == NULL)
-		return (0);
+	if (key == NULL)
+		return ;
 	idx = 0;
-	result = (char *)malloc(ft_strlen(s) + 1);
-	if (!result)
-		return (0);
-	while (s[idx] != '\0')
+	while (key[idx])
 	{
-		result[idx] = s[idx];
+		delete_env_node(&start, key[idx]);
 		idx++;
 	}
-	result[idx] = '\0';
-	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
-/*   Updated: 2022/01/23 20:54:10 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 18:27:14 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ typedef struct s_env
 // envp function
 int		env_parsing(char *envp[], t_env **list);
 char	**env_split(char const *s, char c);
+char	**double_free_split(char **str);
 void	display_env(t_env *start);
 void	display_export(t_env *start);
 char	*search_env(t_env *start, char *key_);
 void	delete_env_node(t_env **start, char *key_);
 int		cmd_insert_env_node(t_env **env, char *str);
+
+// built in
+void	ft_unset(t_env *start, char **key);
+void	ft_env(t_env *start);
+int		ft_export(t_env *start, char **str);
 
 #endif

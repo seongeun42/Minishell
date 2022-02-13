@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 18:52:08 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 20:36:29 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 14:57:31 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,24 @@ static void	insert_new_env_node(t_env *start, t_env *new_node)
 int	cmd_insert_env_node(t_env **start, char *str)
 {
 	char	**pair;
+	char	*key;
+	char	*value;
 	t_env	*new_node;
 	t_env	*ptr;
 
 	ptr = *start;
 	pair = env_split((const char *)str, '=');
-	if (pair == 0)
+	key = ft_strdup(pair[0]);
+	value = ft_strdup(pair[1]);
+	if (key == 0)
 		return (ERR);
-	if (exist_env(*start, pair[0]))
-		update_env_node(*start, pair[0], pair[1]);
+	if (exist_env(*start, key))
+		update_env_node(*start, key, value);
 	else
 	{
-		new_node = create_env_new_node(pair[0], pair[1]);
+		new_node = create_env_new_node(key, value);
 		insert_new_env_node(*start, new_node);
 	}
+	double_free_split(pair);
 	return (OK);
 }
