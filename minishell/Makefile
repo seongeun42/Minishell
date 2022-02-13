@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/23 20:10:45 by seongele         ###   ########.fr        #
+#    Updated: 2022/02/13 17:39:15 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=gcc
 SRC_DIR=./src/
-SRCS=src/main.c
+SRCS=src/main.c\
+	src/utils.c
 
 ENV_DIR=./src/envp/
 ENVS=src/envp/env_split.c\
@@ -21,7 +22,8 @@ ENVS=src/envp/env_split.c\
 	src/envp/env_insert.c
 
 PARSE_DIR=./src/parse/
-PARS=src/parse/parsing.c
+PARS=src/parse/parsing.c\
+	src/parse/redirect.c
 
 OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell

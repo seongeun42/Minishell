@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 14:10:08 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 19:59:49 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 18:22:05 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_list
 {
 	struct s_list	*next;
 	void			*content;
+	int				split;
 }	t_list;
 
 int					ft_atoi(const char *str);

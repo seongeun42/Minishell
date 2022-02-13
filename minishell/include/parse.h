@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/01/23 19:52:58 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 18:42:33 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ typedef struct t_flag
 	int	smallq;
 }	t_flag;
 
-// parse function
+// parse functions
 t_list	*parsing(char *line, t_env* env_list);
 void	line_split(char *line, t_env *env_list, t_list **head);
+t_list	*new_node(char *value, int split_flag);
 t_list	*make_node(char *line, t_env *env_list, int start, int end);
 char	*env_find(char *line, t_env *env_list, int *start);
 char	*env_substitude(char *value, char *env, int *i, int size);
-char	*memory_fit(char *value);
+
+// add space between redirect / pipe functions
+char	*redirect_pipe_space_add(char *line, int cnt);
+void	redirect_pipe_check_and_add(char *new_l, char **l, int *i, char c);
+int		redirect_pipe_count(char *line);
 
 
 #endif

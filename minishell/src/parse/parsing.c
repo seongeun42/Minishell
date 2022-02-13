@@ -3,120 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
-/*   Updated: 2022/01/23 20:52:57 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 19:09:32 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 1. redirect와 pipe 양 옆에 공백 넣어주는 처리
+// 1. redirect와 pipe 양 옆에 공백 넣어주는 처리 -> 했음
 // 2. parsing 할 때, cmd와 redirect 나눠서 리스트 만들기
 // 3. | 나오면 새로운 cmd와 redirect
 
-t_list	*parsing(char *line, t_env* env_list)
+t_list	*parsing(char *line, t_env *env_list)
 {
 	t_list	*str;
 	t_list	*cmd;
 	t_list	*redi;
-
-	// redirect과 pipe 사이에 공백 없으면 넣어주는 처리
+	int		redi_cnt;
 
 	// // test code
+	t_env* tmp;
 
-	// t_env* tmp;
-
-	// tmp = (t_env *)malloc(sizeof(t_env) * 3);
-	// tmp[0].key = "a";
-	// tmp[0].value = "aaaa";
-	// tmp[1].key = "b";
-	// tmp[1].value = "hi";
-	// tmp[2].key = 0;
-	// tmp[2].value = 0;
-	// str = ft_lstnew(0);
-	// cmd = ft_lstnew(0);
+	tmp = (t_env *)malloc(sizeof(t_env) * 3);
+	tmp[0].key = "a";
+	tmp[0].value = "cho hi";
+	tmp[1].key = "b";
+	tmp[1].value = "hi";
+	tmp[2].key = 0;
+	tmp[2].value = 0;
+	str = ft_lstnew(0);
+	cmd = ft_lstnew(0);
+	// redirect과 pipe 사이에 공백 없으면 넣어주는 처리
+	redi_cnt = redirect_pipe_count(line);
+	if (redi_cnt)
+		// line_split(redirect_pipe_space_add(line, redi_cnt), env_list, &str);
+		line_split(redirect_pipe_space_add(line, redi_cnt), tmp, &str);
+	else
+		// line_split(line, env_list, &str);
+		line_split(line, tmp, &str);
 	// line_split(line, env_list, &str);
 
 	// // cmd 리스트 만들기
 
-	// printf("str size: %d\n", ft_lstsize(str));
-	// t_list *cur = str->next;
-	// for (int i = 0; cur; i++)
-	// {
-	// 	printf("%d: %s\n", i, (char *)cur->content);
-	// 	cur = cur->next;
-	// }
+	printf("str size: %d\n", ft_lstsize(str));
+	t_list *cur = str->next;
+	for (int i = 0; cur; i++)
+	{
+		printf("%d: %s, sf:%d\n", i, (char *)cur->content, cur->split);
+		cur = cur->next;
+	}
 
 	return (cmd);
 }
 
-int	redirect_pipe_count(char *line)
-{
-	int		i;
-	int		cnt;
-	
-	cnt = 0;
-	i = -1;
-	while (++i)
-	{
-		if (line[i] == '<')
-		{
-			cnt++;
-			if (line[i + 1] == '<')
-				i++;
-		}
-		else if (line[i] == '>')
-		{
-			cnt++;
-			if (line[i + 1] == '>')
-				i++;
-		}
-		else if (line[i] == '|')
-			cnt++;
-	}
-	return (cnt);
-}
-
-// echo ">>" >>a> b >c >d<e<<g >k |cat -e
-char *redirect_pipe_space_add(char *line)
-{
-	char	*new_line;
-	int		i;
-	int		cnt;
-	
-	cnt = redirect_pipe_count(line);
-	new_line = (char *)malloc(sizeof(char) + (1 + ft_strlen(line) + cnt * 2));
-	if (!new_line)
-		return ERR;
-	i = 0;
-	while (*line)
-	{
-		if (*line == '<')
-		{
-			if (i > 0 && new_line[i - 1] != ' ')
-				new_line[i++] = ' ';
-			new_line[i++] = '<';
-			if (*(line + 1) == '<')
-				new_line[i++] = '<';
-		}
-		else if (*line == '>')
-		{
-
-			if (*(line + 1) == '>')
-				i++;
-		}
-		else if (*line == '|')
-		{
-
-		}
-		else
-			new_line[i++] = *line++;
-	}
-}
-
-static void	line_split_flag_change(char c, t_flag* f)
+static void	line_split_flag_change(char c, t_flag *f)
 {
 	if (c == '"' && !f->bigq && !f->smallq)
 	{
@@ -140,8 +82,7 @@ static void	line_split_flag_change(char c, t_flag* f)
 	}
 }
 
-
-static void	make_node_flag_change(char c, t_flag* f, char *value, int *i)
+static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 {
 	if (c == '"' && !f->bigq && !f->smallq)
 		f->bigq = 1;
@@ -192,26 +133,41 @@ void	line_split(char *line, t_env *env_list, t_list **head)
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
 {
 	char	*value;
+	int		node_split_flag;
 	int		i;
 	t_flag	f;
 
 	f = (t_flag){1, 1, 0, 0};
-	value = (char *)malloc(sizeof(char) * (end - start + 1));
+	value = (char *)ft_calloc(end - start + 1, sizeof(char));
 	if (!value)
 		return (0);
+	node_split_flag = 0;
 	i = 0;
 	while (start < end)
 	{
 		if (f.env_chg && line[start] == '$')
+		{
 			value = env_substitude(value,
-				env_find(line, env_list, &start), &i, end - start);
+					env_find(line, env_list, &start), &i, end - start);
+			if (!f.bigq)
+				node_split_flag = 1;
+		}
 		else
 			make_node_flag_change(line[start], &f, value, &i);
 		++start;
 	}
-	value[i] = 0;
 	value = memory_fit(value);
-	return (ft_lstnew(value));
+	return (new_node(value, node_split_flag));
+}
+
+t_list	*new_node(char *value, int split_flag)
+{
+	t_list	*node;
+
+	node = ft_lstnew(value);
+	if (split_flag)
+		node->split = 1;
+	return (node);
 }
 
 char	*env_find(char *line, t_env *env_list, int *start)
@@ -225,20 +181,18 @@ char	*env_find(char *line, t_env *env_list, int *start)
 	while (line[*start] && line[*start] != ' '
 		&& line[*start] != '\'' && line[*start] != '"')
 		++(*start);
-	key = (char *)malloc(sizeof(char) * (*start - i));
+	key = (char *)ft_calloc(*start - i, sizeof(char));
 	if (!key)
 		return (0);
 	j = -1;
 	while (++i < *start)
 		key[++j] = line[i];
 	key[++j] = 0;
-	printf("key: %s\n", key);
 	env = search_env(env_list, key);
-	printf("v: %s\n", env);
 	free(key);
 	// 공백을 가리키는 상태에서 밖에서 ++되면 공백 하나 패스하게 되니까
 	*start -= 1;
-	return(env);
+	return (env);
 }
 
 char	*env_substitude(char *value, char *env, int *i, int size)
@@ -251,25 +205,11 @@ char	*env_substitude(char *value, char *env, int *i, int size)
 		return (value);
 	else
 	{
-		new_v = (char *)malloc(sizeof(char) * (size + ft_strlen(env) + 1));
+		new_v = (char *)ft_calloc(size + ft_strlen(env) + 1, sizeof(char));
 		ft_strlcpy(new_v, value, *i + 1);
 		ft_strlcat(new_v, env, size + ft_strlen(env) * 2);
 		*i += ft_strlen(env) + 1;
 		free(value);
 	}
 	return (new_v);
-}
-
-char	*memory_fit(char *value)
-{
-	char	*new_value;
-	int		size;
-
-	size = ft_strlen(value);
-	new_value = (char *)malloc(sizeof(char) * (size + 1));
-	if (!new_value)
-		return ERR;
-	ft_strlcpy(new_value, value, size + 1);
-	free(value);
-	return (new_value);
 }
