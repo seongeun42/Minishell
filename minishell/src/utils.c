@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:56:57 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/13 15:58:10 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 17:14:15 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,14 @@ char	*memory_fit(char *value)
 	ft_strlcpy(new_value, value, size + 1);
 	free(value);
 	return (new_value);
+}
+
+void	double_free(char **str)
+{
+	size_t i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
 }
