@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 18:52:08 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 14:57:31 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 19:04:31 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int	cmd_insert_env_node(t_env **start, char *str)
 		new_node = create_env_new_node(key, value);
 		insert_new_env_node(*start, new_node);
 	}
-	double_free_split(pair);
+	double_free(pair);
 	return (OK);
 }

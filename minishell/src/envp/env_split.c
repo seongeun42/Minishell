@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 16:07:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 14:58:34 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 19:02:52 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**env_split(char const *s, char c)
 	else
 		result[1] = ft_substr(s, length + 1, ft_strlen(s));
 	if (!result[0] || (!flag && !result[1]))
-		return (double_free_split(result));
+		return (go_free_split(result));
 	result[2] = 0;
 	return (result);
 }
