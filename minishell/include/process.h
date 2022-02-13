@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/13 14:57:13 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/13 18:27:14 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,10 @@ void	display_export(t_env *start);
 char	*search_env(t_env *start, char *key_);
 void	delete_env_node(t_env **start, char *key_);
 int		cmd_insert_env_node(t_env **env, char *str);
+
+// built in
+void	ft_unset(t_env *start, char **key);
+void	ft_env(t_env *start);
+int		ft_export(t_env *start, char **str);
 
 #endif

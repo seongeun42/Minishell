@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/13 17:39:48 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 18:39:15 by sujo             ###   ########.fr       */
+/*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
+/*   Updated: 2022/02/13 18:29:48 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(t_env *start, char **key)
+int	ft_export(t_env *start, char **str)
 {
 	int idx;
 
-	if (key == NULL)
-		return ;
-	idx = 0;
-	while (key[idx])
+	if (str == NULL)
+		display_export(start);
+	else
 	{
-		delete_env_node(&start, key[idx]);
-		idx++;
+		idx = 0;
+		while (str[idx])
+		{
+			if(cmd_insert_env_node(&start, str[idx]))
+				return (ERR);
+			idx++;
+		}
 	}
+	return (OK);
 }
