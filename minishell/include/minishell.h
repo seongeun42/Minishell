@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/01/23 16:19:56 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/13 15:58:24 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,8 @@
 
 # define ERR 1
 # define OK 0
+
+// util functions
+char	*memory_fit(char *value);
 
 #endif
