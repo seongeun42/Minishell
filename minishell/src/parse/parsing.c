@@ -102,32 +102,80 @@ static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 		value[(*i)++] = c;
 }
 
-void	line_split(char *line, t_env *env_list, t_list **head)
+// start, current, filename 구조체 만들어서 줄 수 줄이기
+// make_node 부분 함수로 따로 빼기
+void	line_split(char *line, t_env *env, t_list **cmd, t_list **redirect)
 {
 	t_flag	f;
 	int		start;
 	int		current;
+	int		filename;
 
 	f = (t_flag){1, 1, 0, 0};
 	start = 0;
 	while (line[start] == ' ')
 		++start;
+	filename = 0;
 	current = start - 1;
 	while (line[++current])
 	{
+		// if (f.space && line[current] == ' ')
+		// {
+		// 	ft_lstadd_back(head, make_node(line, env, start, current));
+		// 	while (line[current] == ' ')
+		// 		++current;
+		// 	start = current--;
+		// }
 		if (f.space && line[current] == ' ')
 		{
-			ft_lstadd_back(head, make_node(line, env_list, start, current));
-			while (line[current] == ' ')
-				++current;
-			start = current;
-			--current;
+			if (line[start] == '<' || line[start] == '>')
+			{
+				// redirect에 붙이기
+				ft_lstadd_back(redi, make_node(line, env_list, start, current));
+				while (line[current] == ' ')
+					++current;
+				start = current--;
+				filename = 1;
+			}
+			else if (line[start] == '|')
+			{
+				// cmd와 redirect 둘 다 붙이기
+				ft_lstadd_back(cmd, make_node(line, env_list, start, current));
+				ft_lstadd_back(redi, make_node(line, env_list, start, current));
+				while (line[current] == ' ')
+					++current;
+				start = current--;
+			}
+			else if (filename)
+			{
+				// redi에 붙이기
+				ft_lstadd_back(redi, make_node(line, env_list, start, current));
+				while (line[current] == ' ')
+					++current;
+				start = current--;
+				filename = 0;
+			}
+			else
+			{
+				// cmd에 붙이기
+				ft_lstadd_back(cmd, make_node(line, env_list, start, current));
+				while (line[current] == ' ')
+					++current;
+				start = current--;
+			}
 		}
 		else if (line[current] == '"' || line[current] == '\'')
 			line_split_flag_change(line[current], &f);
 	}
+	// if (start != current)
+	// 	ft_lstadd_back(head, make_node(line, env, start, current));
 	if (start != current)
-		ft_lstadd_back(head, make_node(line, env_list, start, current));
+	{
+		if (filename)
+			ft_lstadd_back(redi, make_node(line, env_list, start, current));
+		else
+			ft_lstadd_back(cmd, make_node(line, env_list, start, current));
+	}
 }
 
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
