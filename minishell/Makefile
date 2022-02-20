@@ -6,7 +6,7 @@
 #    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/02/13 17:39:15 by seongele         ###   ########.fr        #
+#    Updated: 2022/02/20 18:05:57 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ ENVS=src/envp/env_split.c\
 
 PARSE_DIR=./src/parse/
 PARS=src/parse/parsing.c\
-	src/parse/redirect.c
+	src/parse/redirect.c\
+	src/parse/line_split.c\
+	src/parse/make_node.c
 
 OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell

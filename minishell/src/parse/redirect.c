@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:24:09 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/13 19:06:47 by seongele         ###   ########.fr       */
+/*   Updated: 2022/02/20 17:57:51 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	*redirect_pipe_space_add(char *line, int cnt)
 	char	*new_line;
 	int		i;
 
+	if (!cnt)
+		return (ft_strdup(line));
 	f = (t_flag){0, 0, 0, 0};
 	new_line = (char *)ft_calloc(1 + ft_strlen(line) + cnt * 2, sizeof(char));
 	if (!new_line)
