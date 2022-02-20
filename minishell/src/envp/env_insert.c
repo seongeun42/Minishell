@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 18:52:08 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 19:04:31 by sujo             ###   ########.fr       */
+/*   Updated: 2022/02/20 16:46:42 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	exist_env(t_env *start, char *key_)
 }
 
 // 새로운 노드 추가, 성공 시 node, 실패 시 nul
-static t_env	*create_env_new_node(char *key_, char *value_)
+t_env	*create_env_new_node(char *key_, char *value_)
 {
 	t_env	*new_node;
 
@@ -43,7 +43,7 @@ static t_env	*create_env_new_node(char *key_, char *value_)
 	return (new_node);
 }
 
-static void	update_env_node(t_env *start, char *key_, char *value_)
+void	update_env_node(t_env *start, char *key_, char *value_)
 {
 	int		len;
 	t_env	*ptr;
@@ -61,7 +61,7 @@ static void	update_env_node(t_env *start, char *key_, char *value_)
 	free(key_);
 }
 
-static void	insert_new_env_node(t_env *start, t_env *new_node)
+void	insert_new_env_node(t_env *start, t_env *new_node)
 {
 	t_env	*ptr;
 
