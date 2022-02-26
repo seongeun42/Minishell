@@ -33,9 +33,9 @@ typedef struct s_idx
 t_list	*parsing(char *line, t_env* env_list);
 
 // line split functions
-void	line_split(char *line, t_env *env, t_list ***head);
+int		line_split(char *line, t_env *env, t_list ***head)
+int		line_split_add_node(char *line, t_env *env, t_list ***h, t_idx *i);
 void	line_split_last_arg(char *line, t_env *env, t_list ***h, t_idx *i);
-void	line_split_add_node(char *line, t_env *env, t_list ***h, t_idx *i);
 t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i);
 
 // make node functions

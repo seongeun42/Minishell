@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+// cmd 리스트와 redirect 리스트로 pipe 단위의 cmd 배열 만들기
+
 t_list	*parsing(char *line, t_env *env_list)
 {
 	t_list	*cmd;
@@ -39,9 +41,17 @@ t_list	*parsing(char *line, t_env *env_list)
 	head[1] = &redi;
 	// redirect과 pipe 사이에 공백 없으면 넣어주는 처리
 	redi_cnt = redirect_pipe_count(line);
-	line_split(redirect_pipe_space_add(line, redi_cnt), tmp, head);
+	if (line_split(redirect_pipe_space_add(line, redi_cnt), tmp, head) == ERR)
+	{
+		// redirect 파일명 없으니까 cmd, redirect 리스트 free하기
+	}
+	else
+	{
+		// cmd 리스트 만들기
+		// redirect 리스트 만들기
+	}
 
-	// // cmd 리스트 만들기
+	// cmd, redirect 리스트 확인
 	printf("cmd size: %d\n", ft_lstsize(cmd));
 	t_list *cur1 = cmd->next;
 	for (int i = 0; cur1; i++)
