@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:39:48 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 18:39:15 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/06 14:46:51 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_unset(t_env *start, char **key)
 {
-	int idx;
+	int	idx;
 
 	if (key == NULL)
 		return ;

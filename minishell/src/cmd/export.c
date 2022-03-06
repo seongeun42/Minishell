@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 18:29:48 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/06 14:46:34 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_export(t_env *start, char **str)
 {
-	int idx;
+	int	idx;
 
 	if (str == NULL)
 		display_export(start);
@@ -23,7 +23,7 @@ int	ft_export(t_env *start, char **str)
 		idx = 0;
 		while (str[idx])
 		{
-			if(cmd_insert_env_node(&start, str[idx]))
+			if (cmd_insert_env_node(&start, str[idx]))
 				return (ERR);
 			idx++;
 		}
