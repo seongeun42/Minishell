@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 15:35:26 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 19:19:53 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ typedef struct s_idx
 	int	start;
 	int	current;
 	int	filename;
+	int	pipe_close;
 }	t_idx;
 
 // parse functions
-t_list	*parsing(char *line, t_env* env_list);
+int		parsing(char *line, t_env *env, t_list *cmd, t_list *redi);
 int		last_chr_check(char *line);
 
 // line split functions
@@ -50,11 +51,14 @@ char	*redirect_pipe_space_add(char *line, int cnt);
 void	redirect_pipe_check_and_add(char *new_l, char **l, int *i, char c);
 int		redirect_pipe_count(char *line);
 
-// make redirect list and cmd list functions
-int		make_redirect_list(t_list *redi);
+// make cmd array list functions
 int		make_cmd_list(t_list *cmd_list);
 char	**make_cmd_array(t_list *list);
 char	**array_resize_and_copy(char **old, char **strs, int a_size, int *idx);
 int		count_size(t_list *cur);
+
+// make redirect list functions
+int		make_redirect_list(t_list *redi);
+void	split_redi_list(t_list *cur, t_list *redirect);
 
 #endif

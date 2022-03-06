@@ -6,7 +6,7 @@
 #    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/06 14:42:18 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/06 19:20:48 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,14 @@ PARS=src/parse/parsing.c\
 	src/parse/redirect.c\
 	src/parse/line_split.c\
 	src/parse/make_node.c\
-	src/parse/make_list.c
+	src/parse/make_cmd_array_list.c\
+	src/parse/make_redirect_list.c
 
 OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell
 HEADER=-I include/
 #CFLAG=-Wall -Werror -Wextra
-CFLAG=-fsanitize=address
+#CFLAG=-fsanitize=address
 LIBFT_DIR=./libft
 LIBFT_NAME=libft.a
 

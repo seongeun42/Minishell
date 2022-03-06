@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:02:46 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 14:24:12 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 19:07:56 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,13 @@ int	line_split(char *line, t_env *env, t_list ***head)
 	i.start = 0;
 	while (line[i.start] == ' ')
 		++i.start;
-	i = (t_idx){i.start, i.start - 1, 0};
+	i = (t_idx){i.start, i.start - 1, 0, 0};
 	while (line[++i.current])
 	{
 		if (f.space && line[i.current] == ' ')
 		{
 			if (line_split_add_node(line, env, head, &i) == ERR)
-			{
-				printf("no filename!\n");
 				return (ERR);
-			}
 		}
 		else if (line[i.current] == '"' || line[i.current] == '\'')
 			line_split_flag_change(line[i.current], &f);
@@ -75,7 +72,9 @@ int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 	}
 	else if (line[i->start] == '|')
 	{
-		ft_lstadd_back(head[0], new_node("|", 0));
+		if (i->pipe_close == 1)
+			return (ERR);
+		ft_lstadd_back(head[0], new_node(0, 0));
 		ft_lstadd_back(head[1], make_node_and_add_index(line, env, i));
 	}
 	else if (i->filename)
@@ -92,7 +91,16 @@ t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i)
 {
 	t_list	*node;
 
-	node = make_node(line, env, i->start, i->current);
+	if (line[i->start] == '|')
+	{
+		i->pipe_close = 1;
+		node = new_node(0, 0);
+	}
+	else
+	{
+		i->pipe_close = 0;
+		node = make_node(line, env, i->start, i->current);
+	}
 	while (line[i->current] == ' ')
 		++i->current;
 	i->start = i->current--;

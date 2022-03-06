@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:04:36 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/20 19:27:24 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 18:28:07 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ char	*env_find(char *line, t_env *env_list, int *start)
 	key[++j] = 0;
 	env = search_env(env_list, key);
 	free(key);
-	// 공백을 가리키는 상태에서 밖에서 ++되면 공백 하나 패스하게 되니까
 	*start -= 1;
 	return (env);
 }
