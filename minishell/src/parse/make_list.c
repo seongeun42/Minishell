@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:21:35 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 16:32:29 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 16:38:41 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**make_cmd_array(t_list *list)
 		{
 			// 스플릿으로 쪼개야 하면 array 크기 재조정하고 복붙
 			tmp = ft_split((char *)cur->content, ' ');
-			free(cur->content);
+			// free(cur->content);
 			array = array_resize_and_copy(array, tmp, size, &i);
 		}
 		else
