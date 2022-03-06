@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/01/23 20:10:45 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/06 19:20:48 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=gcc
 SRC_DIR=./src/
-SRCS=src/main.c
+SRCS=src/main.c\
+	src/utils.c
 
 ENV_DIR=./src/envp/
 ENVS=src/envp/env_split.c\
@@ -21,13 +22,18 @@ ENVS=src/envp/env_split.c\
 	src/envp/env_insert.c
 
 PARSE_DIR=./src/parse/
-PARS=src/parse/parsing.c
+PARS=src/parse/parsing.c\
+	src/parse/redirect.c\
+	src/parse/line_split.c\
+	src/parse/make_node.c\
+	src/parse/make_cmd_array_list.c\
+	src/parse/make_redirect_list.c
 
 OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
 NAME=minishell
 HEADER=-I include/
 #CFLAG=-Wall -Werror -Wextra
-CFLAG=-fsanitize=address
+#CFLAG=-fsanitize=address
 LIBFT_DIR=./libft
 LIBFT_NAME=libft.a
 
