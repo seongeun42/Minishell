@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 18:21:35 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/05 18:21:35 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 16:32:29 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ int	make_redirect_list(t_list *redi)
 	redirect = redi;
 	cur = redi->next;
 	redirect->next = 0;
-	while (cur)
+	while (cur && cur->next)
 	{
 		// 새로운 redirect의 시작을 저장하고 리스트에 추가
 		start = cur;
-		ft_lstadd_back(redirect, ft_lstnew(start));
+		ft_lstadd_back(&redirect, ft_lstnew(start));
 		// 파이프가 나오기 전까지 쭉 넘김
-		while (cur && ft_strncmp((char *)cur->next->content, "|", 5))
+		while (cur->next && ft_strncmp((char *)cur->next->content, "|", 5))
 			cur = cur->next;
-		// 마지막 파이프가 아니라면 리스트를 끊어줘야 함
-		if (cur)
+		if (cur->next)
 		{
 			// cur->next가 |니까 cur는 redirect의 마지막 원소
 			end = cur;
@@ -58,7 +57,7 @@ int	make_cmd_list(t_list *cmd_list)
 	cmd->next = 0;
 	while (cur)
 	{
-		ft_lstadd_back(cmd, make_cmd_array(cur));
+		ft_lstadd_back(&cmd, ft_lstnew(make_cmd_array(cur)));
 		while (cur && ft_strncmp((char *)cur->content, "|", 5))
 		{
 			tmp = cur;
@@ -72,8 +71,8 @@ int	make_cmd_list(t_list *cmd_list)
 			// 다음 cmd 시작 노드 저장
 			cur = cur->next;
 			// 파이프 free
-			free(tmp->content);
-			free(tmp);
+			// free(tmp->content);
+			// free(tmp);
 		}
 	}
 	return (OK);
@@ -99,18 +98,19 @@ char	**make_cmd_array(t_list *list)
 		{
 			// 스플릿으로 쪼개야 하면 array 크기 재조정하고 복붙
 			tmp = ft_split((char *)cur->content, ' ');
-			array = array_resize_and_copy(array, tmp, size);
+			free(cur->content);
+			array = array_resize_and_copy(array, tmp, size, &i);
 		}
 		else
-			array[i] = (char *)cur->content;
+			array[i++] = (char *)cur->content;
 		cur = cur->next;
 	}
 	return (array);
 }
 
-int	array_resize_and_copy(char **array, char **strs, int array_size)
+char	**array_resize_and_copy(char **old, char **strs, int a_size, int *idx)
 {
-	char	**n_array;
+	char	**new_a;
 	int		strs_size;
 	int		i;
 	int		j;
@@ -118,28 +118,29 @@ int	array_resize_and_copy(char **array, char **strs, int array_size)
 	strs_size = 0;
 	while (strs[strs_size])
 		++strs_size;
-	n_array = (char **)ft_calloc(array_size + strs_size + 1, sizeof(char *));
-	if (!n_array)
-		return (ERR);
+	new_a = (char **)ft_calloc(a_size + strs_size + 1, sizeof(char *));
+	if (!new_a)
+		return (0);
 	i = -1;
-	while (array[++i])
-		n_array[i] = array[i];
+	while (old[++i])
+		new_a[i] = old[i];
 	j = -1;
 	while (strs[++j])
-		n_array[i + j] = strs[j];
-	double_free(array);
+		new_a[i + j] = strs[j];
+	*idx += j;
+	double_free(old);
 	double_free(strs);
-	return (OK);
+	return (new_a);
 }
 
 int	count_size(t_list *cur)
 {
-	t_list	list;
+	t_list	*list;
 	int		cnt;
 
 	list = cur;
 	cnt = 0;
-	while (ft_strncmp((char *)list->content, "|", 5))
+	while (list && ft_strncmp((char *)list->content, "|", 5))
 	{
 		++cnt;
 		list = list->next;

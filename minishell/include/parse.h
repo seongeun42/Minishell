@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/20 18:07:14 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/06 15:35:26 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ typedef struct s_idx
 
 // parse functions
 t_list	*parsing(char *line, t_env* env_list);
+int		last_chr_check(char *line);
 
 // line split functions
-int		line_split(char *line, t_env *env, t_list ***head)
+int		line_split(char *line, t_env *env, t_list ***head);
 int		line_split_add_node(char *line, t_env *env, t_list ***h, t_idx *i);
 void	line_split_last_arg(char *line, t_env *env, t_list ***h, t_idx *i);
 t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i);
@@ -49,5 +50,11 @@ char	*redirect_pipe_space_add(char *line, int cnt);
 void	redirect_pipe_check_and_add(char *new_l, char **l, int *i, char c);
 int		redirect_pipe_count(char *line);
 
+// make redirect list and cmd list functions
+int		make_redirect_list(t_list *redi);
+int		make_cmd_list(t_list *cmd_list);
+char	**make_cmd_array(t_list *list);
+char	**array_resize_and_copy(char **old, char **strs, int a_size, int *idx);
+int		count_size(t_list *cur);
 
 #endif
