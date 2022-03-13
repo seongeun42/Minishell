@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/02/13 17:41:05 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/13 15:30:55 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@
 // util functions
 char	*memory_fit(char *value);
 void	double_free(char **str);
+
+// signal
+void	set_signal(void);
 
 #endif
