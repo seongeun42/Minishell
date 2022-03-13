@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
+#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/06 19:20:48 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/13 15:34:22 by sujo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=gcc
 SRC_DIR=./src/
 SRCS=src/main.c\
-	src/utils.c
+	src/utils.c\
+	src/signal.c
 
 ENV_DIR=./src/envp/
 ENVS=src/envp/env_split.c\
@@ -41,14 +42,14 @@ LIBFT_NAME=libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJS)
-	$(CC) $(CFLAG) -L. -lft -o $@ $(OBJS) -lreadline
+	$(CC) $(CFLAG) -L. -lft -o $@ $(OBJS) -lreadline $(LDFLAGS)
 
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
 	mv $(LIBFT_DIR)/$(LIBFT_NAME) .
 
 $(SRC_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+	$(CC) $(CFLAG) -c -o $@ $< $(HEADER) $(CPPFLAGS)
 
 $(ENV_DIR)%.o: $(ENV_DIR)%.c
 	$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
