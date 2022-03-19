@@ -13,16 +13,24 @@
 #ifndef PROCESS_H
 # define PROCESS_H
 
+typedef s_cmd_flag
+{
+	int	idx;
+	int	size;
+	int	isFirst;
+}	t_cmd_flag;
+
 // process fuctions
 
 // redirect execute fuctions
 int	exec_redirect(t_list *redirect);
 int	clear_redirect(t_list *redirect, int mode);
 int	heredoc(char *eof);
-int	change_stdin(char *filename, int mode);
-int	change_stdout(char *filename, int mode);
+int	input_redirect_exec(char *filename, int mode);
+int	output_redirect_exec(char *filename, int mode);
 
 // command execute fuctions
+int	command(char **cmd, t_env *env);
 
 
 #endif
