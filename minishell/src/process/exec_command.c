@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 16:25:01 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 19:06:38 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	execute_else(char **cmd, t_env *env)
 {
 	char	*path;
 	char	**split_path;
+	char	**exec_envp;
 	char	*new_path;
 	int		idx;
 
@@ -78,16 +79,17 @@ static int	execute_else(char **cmd, t_env *env)
 	if (!path)
 		return (ERR);
 	split_path = ft_split(path, ':');
-	free(path);
+	exec_envp = env_get(env);
 	idx = 0;
-	execve(cmd[0], cmd, env_get(env));
+	execve(cmd[0], cmd, exec_envp);
 	while (split_path[idx])
 	{
 		new_path = create_new_path(split_path[idx], cmd[0]);
-		execve(new_path, cmd, env_get(env));
+		execve(new_path, cmd, exec_envp);
 		free(new_path);
 		idx++;
 	}
+	//double_free(exec_envp);
 	double_free(split_path);
 	return (ERR);
 }
@@ -101,5 +103,7 @@ int	command(char **cmd, t_env *env)
 	is_built_in = check_built_in(cmd[0]);
 	if (is_built_in)
 		return (execute_built_in(cmd, env));
-	return (execute_else(cmd, env));
+	execute_else(cmd, env);
+	printf("bash: %s: command not found\n", cmd[0]);
+	return (ERR);
 }
