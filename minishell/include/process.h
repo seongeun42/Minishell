@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 13:37:32 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 21:32:28 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	output_redirect_exec(char *filename, int mode);
 
 // command execute fuctions
 int	command(char **cmd, t_env *env);
+
+
+
+int	parent(t_list *cmd_head, t_list *redi_head, t_env *env);
+int	child2(char **cmd, t_list *redirect, t_env *env, int **fd);
+int	close_pipe(int idx, int ***fdss, int exept);
 
 
 #endif
