@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 19:19:53 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:17:53 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**array_resize_and_copy(char **old, char **strs, int a_size, int *idx);
 int		count_size(t_list *cur);
 
 // make redirect list functions
-int		make_redirect_list(t_list *redi);
+int		make_redirect_list(t_list *redi, int size);
 void	split_redi_list(t_list *cur, t_list *redirect);
 
 #endif
