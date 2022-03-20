@@ -36,10 +36,15 @@
 
 # define ERR 1
 # define OK 0
+# define STDIN 0
+# define STDOUT 1
+# define BACKUP_STDIN 100
+# define BACKUP_STDOUT 101
 
 // util functions
 char	*memory_fit(char *value);
 void	double_free(char **str);
+void	list_free(t_list **list);
 
 // signal
 void	set_signal(void);

@@ -35,3 +35,20 @@ void	double_free(char **str)
 		free(str[i]);
 	free(str);
 }
+
+void	list_free(t_list **list)
+{
+	t_list	*curr;
+	t_list	*delnode;
+
+	if (!list)
+		return ;
+	curr = *list;
+	while (curr)
+	{
+		delnode = curr;
+		curr = curr->next;
+		free(delnode);
+	}
+	*list = 0;
+}

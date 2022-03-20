@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	exec_redirect(t_list *redirect)
+int	exec_redirect(t_list *redirect, int fd[])
 {
 	t_list *redi;
 
@@ -23,13 +23,13 @@ int	exec_redirect(t_list *redirect)
 		if (redi->next->split)
 			return (clear_redirect(redirect, ERR));
 		if (!ft_strncmp((char *)redi->content, "<", 3))
-			change_stdin((char *)redi->next->content, 1);
+			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
-			change_stdin((char *)redi->next->content, 0);
+			input_redirect_exec((char *)redi->next->content, 0);
 		else if (!!ft_strncmp((char *)redi->content, ">", 3))
-			change_stdout((char *)redi->next->content, 1);
+			output_redirect_exec((char *)redi->next->content, 1);
 		else
-			change_stdout((char *)redi->next->content, 0);
+			output_redirect_exec((char *)redi->next->content, 0);
 		redi = redi->next->next;
 	}
 	return (clear_redirect(redirect, OK));
@@ -43,17 +43,35 @@ int	clear_redirect(t_list *redirect, int mode)
 	return (OK);
 }
 
-int	heredoc(char *eof)
+int	heredoc(char *eof, int fd[])
 {
+	char	*line;
 
+	while (1)
+	{
+		line = readline("> ");
+		if (!ft_strncmp(line, eof, ft_strlen(line)))
+		{
+			write(fd[1], line, ft_strlen(line));
+			write(fd[1], "\n", 1);
+		}
+		else
+			break
+	}
+	free(line);
+	dup2(fd[0], STDIN);
+	close(fd[1]);
+	close(fd[0]);
+	pipe(fd);
+	return (OK);
 }
 
-int	change_stdin(char *filename, int mode)
+int	input_redirect_exec(char *filename, int fd[], int mode)
 {
 	int	in;
 
 	if (!mode)
-		return (heredoc(filename));
+		return (heredoc(filename, fd));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
 		return (ERR);
@@ -62,7 +80,7 @@ int	change_stdin(char *filename, int mode)
 	return (OK);
 }
 
-int	change_stdout(char *filename, int mode)
+int	output_redirect_exec(char *filename, int mode)
 {
 	int	out;
 

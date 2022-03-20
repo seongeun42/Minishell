@@ -19,8 +19,10 @@ int main(int argc, char *argv[], char *envp[])
 	t_list	*cmd;
 	t_list	*redirect;
 
+	dup2(STDIN, BACKUP_STDIN);
+	dup2(STDOUT, BACKUP_STDOUT);
 	env = NULL;
-	// env_parsing(envp, &env);
+	env_parsing(envp, &env);
 	int k = 1;
 	while(1)
 	{
