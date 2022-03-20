@@ -6,13 +6,13 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/13 17:32:35 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 13:45:13 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_redirect_exec(t_list *cmd_head, t_list *redi_head, t_list *env)
+int	cmd_redirect_exec(t_list *cmd_head, t_list *redi_head, t_env *env)
 {
 	t_list		*cmd;
 	t_list		*redi;
@@ -36,7 +36,7 @@ int	cmd_redirect_exec(t_list *cmd_head, t_list *redi_head, t_list *env)
 	return (OK);
 }
 
-int	exec_process(char **cmd, t_list *redirect, t_list *env, t_cmd_flag *flag)
+int	exec_process(char **cmd, t_list *redirect, t_env *env, t_cmd_flag *flag)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -56,7 +56,7 @@ int	exec_process(char **cmd, t_list *redirect, t_list *env, t_cmd_flag *flag)
 	return (OK);
 }
 
-int	child(char **cmd, t_list *redirect, t_list *env, int fd[])
+int	child(char **cmd, t_list *redirect, t_env *env, int fd[])
 {
 	// redirect 처리
 	if (exec_redirect(redirect, fd) == ERR)
@@ -64,6 +64,7 @@ int	child(char **cmd, t_list *redirect, t_list *env, int fd[])
 	// cmd 처리
 	if (command(cmd, env) == ERR)
 		return (ERR);
+	return (OK);
 }
 
 int	change_stdinout(t_cmd_flag *flag, int fd[])
@@ -87,17 +88,17 @@ int	change_stdinout(t_cmd_flag *flag, int fd[])
 	}
 	close(fd[1]);
 	close(fd[0]);
-	flag->idx += 1
+	flag->idx += 1;
 	return (OK);
 }
 
-int	only_cmd(t_list *cmd, t_list *redi, t_list *env)
+int	only_cmd(t_list *cmd, t_list *redi, t_env *env)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
-		child((char **)cmd->next->content, (t_list *)redi->next->content, env);
+		child((char **)cmd->next->content, (t_list *)redi->next->content, env, 0);
 	else if (pid < 0)
 		return (ERR);
 	else
