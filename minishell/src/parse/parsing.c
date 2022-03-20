@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 18:30:36 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 15:19:09 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	parsing(char *line, t_env *env, t_list *cmd, t_list *redi)
 	else
 	{
 		make_cmd_list(cmd);
-		make_redirect_list(redi);
+		make_redirect_list(redi, ft_lstsize(cmd) - 1);
 	}
 	free(head);
 	return (OK);
