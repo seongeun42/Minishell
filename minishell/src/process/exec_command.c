@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 13:57:43 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:08:36 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ static int	check_built_in(char *cmd)
 	int	size;
 
 	size = ft_strlen(cmd) + 1;
-	if (ft_strncmp("cd", cmd, size))
+	if (!ft_strncmp("cd", cmd, size))
 		return (1);
-	if (ft_strncmp("echo", cmd, size))
+	if (!ft_strncmp("echo", cmd, size))
 		return (1);
-	if (ft_strncmp("env", cmd, size))
+	if (!ft_strncmp("env", cmd, size))
 		return (1);
-	if (ft_strncmp("export", cmd, size))
+	if (!ft_strncmp("export", cmd, size))
 		return (1);
-	if (ft_strncmp("pwd", cmd, size))
+	if (!ft_strncmp("pwd", cmd, size))
 		return (1);
-	if (ft_strncmp("unset", cmd, size))
+	if (!ft_strncmp("unset", cmd, size))
 		return (1);
 	return (0);
 }
@@ -37,17 +37,17 @@ static int	execute_built_in(char **cmd, t_env *env)
 	int	size;
 
 	size = ft_strlen(cmd[0]) + 1;
-	if (ft_strncmp("cd", cmd[0], size))
+	if (!ft_strncmp("cd", cmd[0], size))
 		return (ft_cd(env, cmd[1]));
-	if (ft_strncmp("echo", cmd[0], size))
+	if (!ft_strncmp("echo", cmd[0], size))
 		ft_echo(cmd);
-	if (ft_strncmp("env", cmd[0], size))
+	if (!ft_strncmp("env", cmd[0], size))
 		ft_env(env);
-	if (ft_strncmp("export", cmd[0], size))
+	if (!ft_strncmp("export", cmd[0], size))
 		return (ft_export(env, cmd));
-	if (ft_strncmp("pwd", cmd[0], size))
+	if (!ft_strncmp("pwd", cmd[0], size))
 		return (ft_pwd());
-	if (ft_strncmp("unset", cmd[0], size))
+	if (!ft_strncmp("unset", cmd[0], size))
 		ft_unset(env, cmd);
 	return (OK);
 }
@@ -58,7 +58,7 @@ static char	*create_new_path(char *path, char *cmd)
 	char	*result;
 
 	size = ft_strlen(path) + ft_strlen(cmd) + 1;
-	result = (char *)malloc(sizeof(char) * size + 1);
+	result = (char *)ft_calloc(size + 1, sizeof(char));
 	if (!result)
 		return (0);
 	ft_strlcat(result, path, size + 1);
