@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 16:08:36 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/20 16:25:01 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,11 @@ static int	execute_else(char **cmd, t_env *env)
 	split_path = ft_split(path, ':');
 	free(path);
 	idx = 0;
-	// execve(cmd[0], cmd, env);
-	execve(cmd[0], cmd, 0);
+	execve(cmd[0], cmd, env_get(env));
 	while (split_path[idx])
 	{
 		new_path = create_new_path(split_path[idx], cmd[0]);
-		// execve(new_path, cmd, env);
-		execve(new_path, cmd, 0);
+		execve(new_path, cmd, env_get(env));
 		free(new_path);
 		idx++;
 	}

@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:09:45 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 13:59:27 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:24:09 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		cmd_insert_env_node(t_env **env, char *str);
 t_env	*create_env_new_node(char *key_, char *value_);
 void	update_env_node(t_env *start, char *key_, char *value_);
 void	insert_new_env_node(t_env *start, t_env *new_node);
+char	**env_get(t_env *env);
 
 // built in
 void	ft_unset(t_env *start, char **key);
