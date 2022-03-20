@@ -30,6 +30,8 @@ void	double_free(char **str)
 {
 	size_t i;
 
+	if (!str)
+		return;
 	i = -1;
 	while (str[++i])
 		free(str[i]);
