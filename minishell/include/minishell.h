@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 13:23:08 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 14:12:54 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 
 # define ERR 1
 # define OK 0
-# define STDIN 0
-# define STDOUT 1
 # define BACKUP_STDIN 100
 # define BACKUP_STDOUT 101
 
