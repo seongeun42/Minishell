@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 14:15:56 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 14:57:19 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/20 16:04:07 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*combin_key_value(char *key, char *value)
 	char	*str;
 
 	size = ft_strlen(key) + ft_strlen(value) + 1;
-	str = (char *)malloc(sizeof(char) * size + 1);
+	str = (char *)ft_calloc(size + 1, sizeof(char));
 	if (!str)
 		return (0);
 	ft_strlcat(str, key, size + 1);
