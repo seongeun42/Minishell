@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/13 18:04:26 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/20 13:57:43 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ static int	execute_built_in(char **cmd, t_env *env)
 	int	size;
 
 	size = ft_strlen(cmd[0]) + 1;
-	if (ft_strncmp("cd", cmd, size))
+	if (ft_strncmp("cd", cmd[0], size))
 		return (ft_cd(env, cmd[1]));
-	if (ft_strncmp("echo", cmd, size))
+	if (ft_strncmp("echo", cmd[0], size))
 		ft_echo(cmd);
-	if (ft_strncmp("env", cmd, size))
+	if (ft_strncmp("env", cmd[0], size))
 		ft_env(env);
-	if (ft_strncmp("export", cmd, size))
+	if (ft_strncmp("export", cmd[0], size))
 		return (ft_export(env, cmd));
-	if (ft_strncmp("pwd", cmd, size))
+	if (ft_strncmp("pwd", cmd[0], size))
 		return (ft_pwd());
-	if (ft_strncmp("unset", cmd, size))
+	if (ft_strncmp("unset", cmd[0], size))
 		ft_unset(env, cmd);
 	return (OK);
 }
@@ -77,14 +77,16 @@ static int	execute_else(char **cmd, t_env *env)
 	path = search_env(env, "PATH");
 	if (!path)
 		return (ERR);
-	split_path = ft_split(path, ":");
+	split_path = ft_split(path, ':');
 	free(path);
 	idx = 0;
-	execve(cmd[0], cmd, env);
+	// execve(cmd[0], cmd, env);
+	execve(cmd[0], cmd, 0);
 	while (split_path[idx])
 	{
 		new_path = create_new_path(split_path[idx], cmd[0]);
-		execve(new_path, cmd, env);
+		// execve(new_path, cmd, env);
+		execve(new_path, cmd, 0);
 		free(new_path);
 		idx++;
 	}

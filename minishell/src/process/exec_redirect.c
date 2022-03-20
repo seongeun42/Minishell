@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.c                                         :+:      :+:    :+:   */
+/*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/13 17:05:47 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 13:32:40 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	exec_redirect(t_list *redirect, int fd[])
 		if (redi->next->split)
 			return (clear_redirect(redirect, ERR));
 		if (!ft_strncmp((char *)redi->content, "<", 3))
-			input_redirect_exec((char *)redi->next->content, 1);
+			input_redirect_exec((char *)redi->next->content, fd, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
-			input_redirect_exec((char *)redi->next->content, 0);
+			input_redirect_exec((char *)redi->next->content, fd, 0);
 		else if (!!ft_strncmp((char *)redi->content, ">", 3))
 			output_redirect_exec((char *)redi->next->content, 1);
 		else
@@ -37,7 +37,7 @@ int	exec_redirect(t_list *redirect, int fd[])
 
 int	clear_redirect(t_list *redirect, int mode)
 {
-	ft_lstclear(redirect, free);
+	ft_lstclear(&redirect, free);
 	if (mode == ERR)
 		return (ERR);
 	return (OK);
@@ -56,7 +56,7 @@ int	heredoc(char *eof, int fd[])
 			write(fd[1], "\n", 1);
 		}
 		else
-			break
+			break;
 	}
 	free(line);
 	dup2(fd[0], STDIN);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/13 15:30:55 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/20 13:23:08 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-# include "process.h"
-# include "parse.h"
 # include "bulit_in.h"
+# include "parse.h"
+# include "process.h"
 
 # define ERR 1
 # define OK 0
