@@ -3,40 +3,53 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/13 15:34:22 by sujo             ###   ########.fr        #
+#    Updated: 2022/03/20 16:19:03 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC=gcc
-SRC_DIR=./src/
-SRCS=src/main.c\
-	src/utils.c\
-	src/signal.c
+CC = gcc
+SRC_DIR = ./src/
+SRCS = src/main.c\
+		src/utils.c\
+		src/signal.c
 
-ENV_DIR=./src/envp/
-ENVS=src/envp/env_split.c\
-	src/envp/env_parsing.c\
-	src/envp/env_func.c\
-	src/envp/env_insert.c
+CMD_DIR = ./src/cmd/
+CMDS = src/cmd/cd.c\
+		src/cmd/echo.c\
+		src/cmd/env.c\
+		src/cmd/export.c\
+		src/cmd/pwd.c\
+		src/cmd/unset.c
 
-PARSE_DIR=./src/parse/
-PARS=src/parse/parsing.c\
-	src/parse/redirect.c\
-	src/parse/line_split.c\
-	src/parse/make_node.c\
-	src/parse/make_cmd_array_list.c\
-	src/parse/make_redirect_list.c
+ENV_DIR = ./src/envp/
+ENVS = src/envp/env_split.c\
+		src/envp/env_parsing.c\
+		src/envp/env_func.c\
+		src/envp/env_insert.c
 
-OBJS=$(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o)
-NAME=minishell
-HEADER=-I include/
-#CFLAG=-Wall -Werror -Wextra
-#CFLAG=-fsanitize=address
-LIBFT_DIR=./libft
-LIBFT_NAME=libft.a
+PARSE_DIR = ./src/parse/
+PARS = src/parse/parsing.c\
+		src/parse/redirect.c\
+		src/parse/line_split.c\
+		src/parse/make_node.c\
+		src/parse/make_cmd_array_list.c\
+		src/parse/make_redirect_list.c
+
+PROCESS_DIR = ./src/process/
+PROCS = src/process/process.c\
+		src/process/exec_redirect.c\
+		src/process/exec_command.c
+
+OBJS = $(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o) $(CMDS:.c=.o) $(PROCS:.c=.o)
+NAME = minishell
+HEADER = -I include/
+#CFLAG = -Wall -Werror -Wextra
+#CFLAG = -fsanitize=address
+LIBFT_DIR = ./libft
+LIBFT_NAME = libft.a
 
 
 all: $(NAME)
