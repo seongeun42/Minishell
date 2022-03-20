@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 13:32:40 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:13:21 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	exec_redirect(t_list *redirect, int fd[])
 {
 	t_list *redi;
 
+	if (!redirect)
+		return (OK);
 	redi = redirect->next;
 	while (redi)
 	{
@@ -59,7 +61,7 @@ int	heredoc(char *eof, int fd[])
 			break;
 	}
 	free(line);
-	dup2(fd[0], STDIN);
+	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
 	close(fd[0]);
 	pipe(fd);
@@ -75,7 +77,7 @@ int	input_redirect_exec(char *filename, int fd[], int mode)
 	in = open(filename, O_RDONLY);
 	if (in == -1)
 		return (ERR);
-	dup2(in, 0);
+	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);
 }
@@ -90,7 +92,7 @@ int	output_redirect_exec(char *filename, int mode)
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
 		return (ERR);
-	dup2(out, 1);
+	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);
 }

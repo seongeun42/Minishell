@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/06 18:43:14 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:16:35 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int main(int argc, char *argv[], char *envp[])
 	t_list	*cmd;
 	t_list	*redirect;
 
-	dup2(STDIN, BACKUP_STDIN);
-	dup2(STDOUT, BACKUP_STDOUT);
+	dup2(STDIN_FILENO, BACKUP_STDIN);
+	dup2(STDOUT_FILENO, BACKUP_STDOUT);
 	env = NULL;
 	env_parsing(envp, &env);
 	int k = 1;
@@ -33,59 +33,60 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			printf("[%d] %s\n", (int)ft_strlen(str), str);
 			parsing(str, env, cmd, redirect);
+			cmd_redirect_exec(cmd, redirect, env);
 		}
 		else
 			break ;
 		add_history(str);
 		free(str);
 
-		// cmd check
-		printf("cmd size: %d\n", ft_lstsize(cmd));
-		t_list *cur1 = cmd->next;
-		for (int i = 0; cur1; i++)
-		{
-			printf("%d번째 list\n", i);
-			char **ccc = (char **)cur1->content;
-			for (int j = 0; ccc[j]; j++)
-				printf("%d: %s\n", j, ccc[j]);
-			cur1 = cur1->next;
-		}
-		// cmd free
-		t_list *cur11 = cmd->next;
-		for (int i = 0; cur11; i++)
-		{
-			t_list *tmp = cur11;
-			double_free(cur11->content);
-			cur11 = cur11->next;
-			free(tmp);
-		}
-		free(cmd);
+		// // cmd check
+		// printf("cmd size: %d\n", ft_lstsize(cmd));
+		// t_list *cur1 = cmd->next;
+		// for (int i = 0; cur1; i++)
+		// {
+		// 	printf("%d번째 list\n", i);
+		// 	char **ccc = (char **)cur1->content;
+		// 	for (int j = 0; ccc[j]; j++)
+		// 		printf("%d: %s\n", j, ccc[j]);
+		// 	cur1 = cur1->next;
+		// }
+		// // cmd free
+		// t_list *cur11 = cmd->next;
+		// for (int i = 0; cur11; i++)
+		// {
+		// 	t_list *tmp = cur11;
+		// 	double_free(cur11->content);
+		// 	cur11 = cur11->next;
+		// 	free(tmp);
+		// }
+		// free(cmd);
 
-		// redi check
-		printf("\nredi size: %d\n", ft_lstsize(redirect));
-		t_list *cur2 = redirect->next;
-		for (int i = 0; cur2; i++)
-		{
-			printf("%d번째 list\n", i);
-			t_list *curr = cur2->content;
-			for (int j = 0; curr; j++)
-			{
-				printf("%d: %s, sf:%d\n", j, (char *)curr->content, curr->split);
-				curr = curr->next;
-			}
-			cur2 = cur2->next;
-		}
-		// redi free
-		t_list *cur22 = redirect->next;
-		for (int i = 0; cur22; i++)
-		{
-			t_list *tmp2 = cur22;
-			t_list *curr = cur22->content;
-			ft_lstclear(&curr, free);
-			cur22 = cur22->next;
-			free(tmp2);
-		}
-		free(redirect);
+		// // redi check
+		// printf("\nredi size: %d\n", ft_lstsize(redirect));
+		// t_list *cur2 = redirect->next;
+		// for (int i = 0; cur2; i++)
+		// {
+		// 	printf("%d번째 list\n", i);
+		// 	t_list *curr = cur2->content;
+		// 	for (int j = 0; curr; j++)
+		// 	{
+		// 		printf("%d: %s, sf:%d\n", j, (char *)curr->content, curr->split);
+		// 		curr = curr->next;
+		// 	}
+		// 	cur2 = cur2->next;
+		// }
+		// // redi free
+		// t_list *cur22 = redirect->next;
+		// for (int i = 0; cur22; i++)
+		// {
+		// 	t_list *tmp2 = cur22;
+		// 	t_list *curr = cur22->content;
+		// 	ft_lstclear(&curr, free);
+		// 	cur22 = cur22->next;
+		// 	free(tmp2);
+		// }
+		// free(redirect);
 	}
 	return(0);
 }
