@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 15:23:40 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/13 15:28:36 by sujo             ###   ########.fr       */
+/*   Created: 2022/03/21 16:25:27 by sujo              #+#    #+#             */
+/*   Updated: 2022/03/21 16:25:39 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sig_c(void)
+static void	sig_c_parent(int signo)
 {
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+	exit(0);
 }
 
-static void	sig_slash(void)
+static void	sig_slash_parent(int signo)
 {
-	rl_redisplay();
+	printf("Quit : 3\n");
+	exit(0);
 }
 
-void	set_signal(void)
+void	set_signal_parent(void)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, (void *)sig_c);
-	signal(SIGQUIT, (void *)sig_slash);
+	signal(SIGINT, (void *)sig_c_parent);
+	signal(SIGQUIT, (void *)sig_slash_parent);
 }
