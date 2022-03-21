@@ -6,7 +6,7 @@
 #    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/20 16:34:27 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/21 13:18:25 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ PARS = src/parse/parsing.c\
 		src/parse/make_redirect_list.c
 
 PROCESS_DIR = ./src/process/
-PROCS = src/process/process.c\
+PROCS = src/process/process2.c\
 		src/process/exec_redirect.c\
 		src/process/exec_command.c
 

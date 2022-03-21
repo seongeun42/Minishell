@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 16:11:10 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 21:34:03 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,130 @@ int	exec_process(char **cmd, t_list *redirect, t_env *env, t_cmd_flag *flag)
 	return (OK);
 }
 
+// ---------------------
+
+int	cmd_redirect_exec2(t_list *cmd, t_list *redi, t_env *env)
+{
+	pid_t	pid;
+	t_list	*tmp;
+	t_list	*tmp2;
+
+	pid = fork();
+	if (pid == 0)
+		parent(cmd->next, redi->next, env, ft_lstsize(cmd));
+	else if (pid < 0)
+		return (ERR);
+	else
+		wait(NULL);
+	while (cmd)
+	{
+		tmp = cmd;
+		double_free(cmd->content);
+		cmd = cmd->next;
+		free(tmp);
+	}
+	free(cmd);
+	while (redi)
+	{
+		tmp = redi;
+		tmp2 = redi->content;
+		ft_lstclear(&tmp2, free);
+		redi = redi->next;
+		free(tmp);
+	}
+	free(redi);
+	return (OK);
+}
+
+int	**make_pipe(int size)
+{
+	int	**fds;
+	int	idx;
+
+	fds = (int **)calloc(size - 1, sizeof(int *));
+	if (!fds)
+		exit(ERR);
+	idx = -1;
+	while (++idx < size - 1)
+	{
+		fds[idx] = (int *)calloc(2, sizeof(int));
+		if (pipe(fds[idx]) == -1)
+			exit(ERR);
+	}
+	return (fds);
+}
+
+int	parent(t_list *cmd, t_list *redi, t_env *env, int size)
+{
+	pid_t	pid;
+	int		idx;
+	int		**fds;
+
+	fds = make_pipe(size);
+	idx = -1;
+	while (++idx < size)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			// 두번째 명령어부터는 이전 명령어의 부모와의 파이프로부터 결과 읽어옴
+			if (idx > 0)
+				dup2(fds[idx - 1][0], STDIN_FILENO);
+			// 1 ~ n-1명령어의 결과는 현재 명령어의 부모와의 파이프에 씀
+			if (idx < size - 1)
+				dup2(fds[idx][1], STDOUT_FILENO);
+			else
+				// 마지막 명령어의 결과는 표준출력으로
+				dup2(BACKUP_STDOUT, STDOUT_FILENO);
+			close_pipe(size - 1, &fds, idx);
+			if (child2((char **)cmd->content,
+				(t_list *)redi->content, env, &fds[idx]) == ERR)
+				exit(ERR);
+		}
+		else if (pid < 0)
+			return (ERR);
+		else
+		{
+			if (idx == size - 1)
+				waitpid(pid, NULL, 0);
+			else
+				waitpid(pid, NULL, WNOHANG);
+		}
+		cmd = cmd->next;
+		redi = redi->next;
+	}
+	close_pipe(size - 1, &fds, -1);
+	return (OK);
+}
+
+int	child2(char **cmd, t_list *redirect, t_env *env, int **fd)
+{
+	if (exec_redirect(redirect, *fd) == ERR)
+		return (ERR);
+	if (command(cmd, env) == ERR)
+		return (ERR);
+	close(*(fd[0]));
+	close(*(fd[1]));
+	return (OK);
+}
+
+int	close_pipe(int idx, int ***fdss, int exept)
+{
+	int	**fds;
+
+	fds = *fdss;
+	while (idx--)
+	{
+		if (idx == exept)
+			continue ;
+		close(fds[idx][0]);
+		close(fds[idx][1]);
+	}
+	return (OK);
+}
+
+//------------------------
+
 int	child(char **cmd, t_list *redirect, t_env *env, int fd[])
 {
 	printf("child function in!\n");
@@ -104,15 +228,29 @@ int	change_stdinout(t_cmd_flag *flag, int fd[])
 
 int	only_cmd(t_list *cmd, t_list *redi, t_env *env)
 {
+	int		fd[2];
 	pid_t	pid;
+	t_list	*clear_redi;
 
+	pipe(fd);
 	pid = fork();
 	if (pid == 0)
-		child((char **)cmd->next->content, (t_list *)redi->next->content, env, 0);
+	{
+		if (child((char **)cmd->next->content,
+			(t_list *)redi->next->content, env, fd) == ERR)
+			exit(ERR);
+	}
 	else if (pid < 0)
 		return (ERR);
 	else
+	{
+		close(fd[0]);
+		close(fd[1]);
 		wait(NULL);
+	}
+	clear_redi = (t_list *)redi->next->content;
+	ft_lstclear(&clear_redi, free);
+	double_free((char **)cmd->next->content);
 	list_free(&cmd);
 	list_free(&redi);
 	return (OK);

@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 16:13:21 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/20 20:02:02 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,25 @@ int	exec_redirect(t_list *redirect, int fd[])
 
 	if (!redirect)
 		return (OK);
-	redi = redirect->next;
+	redi = redirect;
 	while (redi)
 	{
-		// 파일명을 쪼개야 하면 에러 처리
 		if (redi->next->split)
-			return (clear_redirect(redirect, ERR));
+			return (ERR);
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, fd, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
+		{
+			printf("heredoc~\n");
 			input_redirect_exec((char *)redi->next->content, fd, 0);
+			printf("heredoc bye~\n");
+		}
 		else if (!!ft_strncmp((char *)redi->content, ">", 3))
 			output_redirect_exec((char *)redi->next->content, 1);
 		else
 			output_redirect_exec((char *)redi->next->content, 0);
 		redi = redi->next->next;
 	}
-	return (clear_redirect(redirect, OK));
-}
-
-int	clear_redirect(t_list *redirect, int mode)
-{
-	ft_lstclear(&redirect, free);
-	if (mode == ERR)
-		return (ERR);
 	return (OK);
 }
 
@@ -52,7 +47,7 @@ int	heredoc(char *eof, int fd[])
 	while (1)
 	{
 		line = readline("> ");
-		if (!ft_strncmp(line, eof, ft_strlen(line)))
+		if (ft_strncmp(line, eof, ft_strlen(line) + 1))
 		{
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
@@ -62,9 +57,8 @@ int	heredoc(char *eof, int fd[])
 	}
 	free(line);
 	dup2(fd[0], STDIN_FILENO);
-	close(fd[1]);
-	close(fd[0]);
-	pipe(fd);
+	// close(fd[1]);
+	// close(fd[0]);
 	return (OK);
 }
 

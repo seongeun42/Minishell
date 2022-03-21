@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 16:29:01 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:54:27 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[], char *envp[])
 	dup2(STDIN_FILENO, BACKUP_STDIN);
 	dup2(STDOUT_FILENO, BACKUP_STDOUT);
 	env = NULL;
-	//set_signal();
+	// set_signal();
 	env_parsing(envp, &env);
 	int k = 1;
 	while(1)
@@ -32,9 +32,11 @@ int main(int argc, char *argv[], char *envp[])
 		str = readline("path > ");
 		if (str)
 		{
-			printf("[%d] %s\n", (int)ft_strlen(str), str);
+			// printf("[%d] %s\n", (int)ft_strlen(str), str);
 			parsing(str, env, cmd, redirect);
-			cmd_redirect_exec(cmd, redirect, env);
+			// cmd_redirect_exec(cmd, redirect, env);
+			cmd_redirect_exec2(cmd, redirect, env);
+			// parent(cmd, redirect, env);
 		}
 		else
 			break ;
