@@ -24,11 +24,7 @@ int	cmd_redirect_exec2(t_list *cmd, t_list *redi, t_env *env)
 	else if (pid < 0)
 		return (ERR);
 	else
-	{
-		// printf("%d cmd over wating...\n", pid);
 		wait(NULL);
-		// printf("cmd over!\n");
-	}
 	while (cmd)
 	{
 		tmp = cmd;
@@ -49,7 +45,7 @@ int	cmd_redirect_exec2(t_list *cmd, t_list *redi, t_env *env)
 	return (OK);
 }
 
-int	**make_pipe(int size)
+int	**make_pipe_space(int size)
 {
 	int	**fds;
 	int	idx;
@@ -59,12 +55,7 @@ int	**make_pipe(int size)
 		exit(ERR);
 	idx = -1;
 	while (++idx < size)
-	{
 		fds[idx] = (int *)malloc(sizeof(int) * 2);
-		if (pipe(fds[idx]) == -1)
-			exit(ERR);
-		// printf("idx pipe : %d, %d\n", fds[idx][0], fds[idx][1]);
-	}
 	return (fds);
 }
 
@@ -74,66 +65,48 @@ int	parent(t_list *cmd, t_list *redi, t_env *env, int size)
 	int		idx;
 	int		**fds;
 
-	// printf("parent in! cmd size : %d\n", size);
-	fds = make_pipe(size);
+	fds = make_pipe_space(size);
 	idx = -1;
 	while (++idx < size)
 	{
+		if (pipe(fds[idx]) == -1)
+			exit(ERR);
 		pid = fork();
 		if (pid == 0)
 		{
-			char ** ccc = (char **)cmd->content;
-			// printf("%d child process : %s\n", idx, ccc[0]);
-			// 두번째 명령어부터는 이전 명령어의 부모와의 파이프로부터 결과 읽어옴
-			if (idx > 0)
-				dup2(fds[idx - 1][0], STDIN_FILENO);
-			// 1 ~ n-1명령어의 결과는 현재 명령어의 부모와의 파이프에 씀
-			if (idx < size - 1)
+			if (idx != size - 1)
 				dup2(fds[idx][1], STDOUT_FILENO);
-			close_pipe(size, fds, idx);
-			if (child2((char **)cmd->content,
-				(t_list *)redi->content, env, fds[idx]) == ERR)
-				exit(ERR);
+			close(fds[idx][0]);
+			close(fds[idx][1]);
+			if (exec_redirect(redirect) == ERR)
+				return (ERR);
+			if (command(cmd, env) == ERR)
+				return (ERR);
 		}
 		else if (pid < 0)
 			return (ERR);
 		else
 		{
-			// printf("%d child process : %d\n", idx, pid);
 			if (idx < size - 1)
 				waitpid(pid, NULL, WNOHANG);
 			else
 				waitpid(pid, NULL, 0);
-				// wait(NULL);
+			close(fds[idx][1]);
+			dup2(fds[idx][0], STDIN_FILENO);
+			close(fds[idx][0]);
 		}
 		cmd = cmd->next;
 		redi = redi->next;
 	}
-	close_pipe(size, fds, -1);
 	exit(OK);
 	return (OK);
 }
 
-int	child2(char **cmd, t_list *redirect, t_env *env, int *fd)
+int	child2(char **cmd, t_list *redirect, t_env *env)
 {
-	if (exec_redirect(redirect, fd) == ERR)
+	if (exec_redirect(redirect) == ERR)
 		return (ERR);
-	close(fd[0]);
-	close(fd[1]);
 	if (command(cmd, env) == ERR)
 		return (ERR);
-	return (OK);
-}
-
-int	close_pipe(int size, int **fds, int last)
-{
-	int	idx;
-
-	idx = -1;
-	while (++idx < size)
-	{
-		close(fds[idx][0]);
-		close(fds[idx][1]);
-	}
 	return (OK);
 }

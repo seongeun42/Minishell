@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	exec_redirect(t_list *redirect, int fd[])
+int	exec_redirect(t_list *redirect)
 {
 	t_list *redi;
 
@@ -24,11 +24,11 @@ int	exec_redirect(t_list *redirect, int fd[])
 		if (redi->next->split)
 			return (ERR);
 		if (!ft_strncmp((char *)redi->content, "<", 3))
-			input_redirect_exec((char *)redi->next->content, fd, 1);
+			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
 		{
 			printf("heredoc~\n");
-			input_redirect_exec((char *)redi->next->content, fd, 0);
+			input_redirect_exec((char *)redi->next->content, 0);
 			printf("heredoc bye~\n");
 		}
 		else if (!!ft_strncmp((char *)redi->content, ">", 3))
@@ -40,10 +40,13 @@ int	exec_redirect(t_list *redirect, int fd[])
 	return (OK);
 }
 
-int	heredoc(char *eof, int fd[])
+int	heredoc(char *eof)
 {
 	char	*line;
+	int		fd[2];
 
+	if (pipe(fd) == -1)
+		return (ERR);
 	while (1)
 	{
 		line = readline("> ");
@@ -56,13 +59,13 @@ int	heredoc(char *eof, int fd[])
 			break;
 	}
 	free(line);
+	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
-	// close(fd[1]);
-	// close(fd[0]);
+	close(fd[0]);
 	return (OK);
 }
 
-int	input_redirect_exec(char *filename, int fd[], int mode)
+int	input_redirect_exec(char *filename, int mode)
 {
 	int	in;
 

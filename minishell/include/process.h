@@ -28,10 +28,9 @@ int	change_stdinout(t_cmd_flag *flag, int fd[]);
 int	only_cmd(t_list *cmd, t_list *redi, t_env *env);
 
 // redirect execute fuctions
-int	exec_redirect(t_list *redirect, int fd[]);
-int	clear_redirect(t_list *redirect, int mode);
-int	heredoc(char *eof, int fd[]);
-int	input_redirect_exec(char *filename, int fd[], int mode);
+int	exec_redirect(t_list *redirect);
+int	heredoc(char *eof);
+int	input_redirect_exec(char *filename, int mode);
 int	output_redirect_exec(char *filename, int mode);
 
 // command execute fuctions
@@ -41,7 +40,7 @@ int	command(char **cmd, t_env *env);
 int	cmd_redirect_exec2(t_list *cmd, t_list *redi, t_env *env);
 int	**make_pipe(int size);
 int	parent(t_list *cmd, t_list *redi, t_env *env, int size);
-int	child2(char **cmd, t_list *redirect, t_env *env, int *fd);
+int	child2(char **cmd, t_list *redirect, t_env *env);
 int	close_pipe(int size, int **fds, int last);
 // int	close_pipe(int max_fd);
 
