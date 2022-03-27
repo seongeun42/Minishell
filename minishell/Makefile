@@ -6,7 +6,7 @@
 #    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/27 17:27:19 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/27 19:25:02 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ CMDS = src/cmd/cd.c\
 		src/cmd/env.c\
 		src/cmd/export.c\
 		src/cmd/pwd.c\
-		src/cmd/unset.c
+		src/cmd/unset.c\
+		src/cmd/exit.c
 
 ENV_DIR = ./src/envp/
 ENVS = src/envp/env_split.c\

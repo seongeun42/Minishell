@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 19:11:05 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:40:45 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ int	check_export_unset(char **cmd, int size, t_env *env)
 		{
 			ft_unset(env, cmd);
 			return (0);
+		}
+		if (!ft_strncmp("exit", cmd[0], 5))
+		{
+			g_errcode = ft_exit(cmd);
+			if (g_errcode >= 0)
+			{
+				printf("exit\n");
+				exit(g_errcode);
+			}
+			return (g_errcode);
 		}
 	}
 	return (1);
@@ -48,14 +58,14 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		cmd = ft_lstnew(0);
 		redirect = ft_lstnew(0);
-		str = readline("path > ");
+		str = readline("\033[32mprompt > \033[0m");
 		if (str)
 		{
 			if (!ft_strlen(str))
 				continue ;
 			parsing(str, env, cmd, redirect);
 			if (check_export_unset((char **)cmd->next->content,
-				ft_lstsize(cmd) - 1, env))
+				ft_lstsize(cmd) - 1, env) == 1)
 			{
 				cre.cmd = cmd;
 				cre.redi = redirect;

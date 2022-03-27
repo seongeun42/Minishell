@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:09:45 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 16:24:09 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:21:16 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ void	insert_new_env_node(t_env *start, t_env *new_node);
 char	**env_get(t_env *env);
 
 // built in
+# define LL_MAX 9223372036854775807
 void	ft_unset(t_env *start, char **key);
 void	ft_env(t_env *start);
 void	ft_echo(char **cmd);
 int		ft_export(t_env *start, char **str);
 int		ft_pwd(void);
 int		ft_cd(t_env *start, char *path);
+int		ft_exit(char **cmd);
 
 #endif

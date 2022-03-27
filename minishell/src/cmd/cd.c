@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:05:19 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 18:41:11 by sujo             ###   ########.fr       */
+/*   Updated: 2022/03/27 17:44:45 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	update_cd_env(t_env *start, char *key_, char *value_)
 
 static int	check_is_file(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
