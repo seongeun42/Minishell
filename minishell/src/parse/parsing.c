@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 15:19:09 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:06:20 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	last_chr_check(char *line)
 		;
 	if (line[size] == '<' || line[size] == '>' || line[size] == '|')
 	{
-		printf("Line is unclosed!\n");
+		printf("syntax error near unexpected token '%c'\n", line[size]);
 		return (ERR);
 	}
 	return (OK);
@@ -37,14 +37,15 @@ int	parsing(char *line, t_env *env, t_list *cmd, t_list *redi)
 	head[0] = &cmd;
 	head[1] = &redi;
 	if (last_chr_check(line) == ERR)
-		return (ERR);
+		return (ERRCODE_ABNOMAl_LINE);
 	redi_cnt = redirect_pipe_count(line);
 	if (line_split(redirect_pipe_space_add(line, redi_cnt), env, head) == ERR)
 	{
 		printf("Redirect or Pipe need a argument!\n");
 		ft_lstclear(&(redi->next), free);
 		ft_lstclear(&(cmd->next), free);
-		return (ERR);
+		free(head);
+		return (ERRCODE_ABNOMAl_LINE);
 	}
 	else
 	{

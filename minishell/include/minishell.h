@@ -6,12 +6,17 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 14:12:54 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:36:35 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ERR 1
+# define OK 0
+# define BACKUP_STDIN 100
+# define BACKUP_STDOUT 101
 
 # include <unistd.h>
 # include <stdio.h>
@@ -29,15 +34,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
 # include "bulit_in.h"
-# include "parse.h"
-# include "process.h"
 
-# define ERR 1
-# define OK 0
-# define BACKUP_STDIN 100
-# define BACKUP_STDOUT 101
+typedef struct s_cre
+{
+	t_list	*cmd;
+	t_list	*redi;
+	t_env	*env;
+}	t_cre;
 
 // util functions
 char	*memory_fit(char *value);
@@ -46,5 +50,14 @@ void	list_free(t_list **list);
 
 // signal
 void	set_signal(void);
+void	set_signal_parent(void);
+void	set_signal_child(void);
+
+// global variant
+extern	int	g_ERRCODE;
+
+# include "parse.h"
+# include "process.h"
+
 
 #endif

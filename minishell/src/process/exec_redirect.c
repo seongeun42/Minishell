@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 14:37:07 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:38:02 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exec_redirect(t_list *redirect)
 {
-	t_list *redi;
+	t_list	*redi;
 
 	if (!redirect)
 		return (OK);
@@ -22,7 +22,7 @@ int	exec_redirect(t_list *redirect)
 	while (redi)
 	{
 		if (redi->next->split)
-			return (ERR);
+			exit(ERR);
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
@@ -43,7 +43,7 @@ int	heredoc(char *eof)
 	int		fd[2];
 
 	if (pipe(fd) == -1)
-		return (ERR);
+		exit(ERR);
 	while (1)
 	{
 		write(BACKUP_STDOUT, "> ", 2);
@@ -55,7 +55,7 @@ int	heredoc(char *eof)
 			write(fd[1], "\n", 1);
 		}
 		else
-			break;
+			break ;
 	}
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
@@ -86,7 +86,7 @@ int	output_redirect_exec(char *filename, int mode)
 	else
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
-		return (ERR);
+		exit(ERR);
 	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);

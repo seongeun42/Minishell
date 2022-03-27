@@ -6,12 +6,14 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 15:17:53 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 16:52:58 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# define ERRCODE_ABNOMAl_LINE 258
 
 // flag struct
 typedef struct s_flag
