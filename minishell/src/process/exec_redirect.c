@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 20:02:02 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 14:37:07 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ int	exec_redirect(t_list *redirect)
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
-		{
-			printf("heredoc~\n");
 			input_redirect_exec((char *)redi->next->content, 0);
-			printf("heredoc bye~\n");
-		}
 		else if (!!ft_strncmp((char *)redi->content, ">", 3))
 			output_redirect_exec((char *)redi->next->content, 1);
 		else
@@ -42,23 +38,25 @@ int	exec_redirect(t_list *redirect)
 
 int	heredoc(char *eof)
 {
-	char	*line;
+	char	buf[101];
+	int		size;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
 		return (ERR);
 	while (1)
 	{
-		line = readline("> ");
-		if (ft_strncmp(line, eof, ft_strlen(line) + 1))
+		write(BACKUP_STDOUT, "> ", 2);
+		size = read(BACKUP_STDIN, buf, 100);
+		buf[size - 1] = 0;
+		if (ft_strncmp(buf, eof, ft_strlen(buf) + 1))
 		{
-			write(fd[1], line, ft_strlen(line));
+			write(fd[1], buf, ft_strlen(buf));
 			write(fd[1], "\n", 1);
 		}
 		else
 			break;
 	}
-	free(line);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -70,7 +68,7 @@ int	input_redirect_exec(char *filename, int mode)
 	int	in;
 
 	if (!mode)
-		return (heredoc(filename, fd));
+		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
 		return (ERR);
