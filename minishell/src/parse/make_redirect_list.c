@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 19:10:35 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 15:41:52 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:15:28 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	make_redirect_list(t_list *redi, int size)
 	return (OK);
 }
 
+// 노미 고쳐야 함
 void	split_redi_list(t_list *cur, t_list *redirect)
 {
 	t_list	*start;
@@ -53,4 +54,6 @@ void	split_redi_list(t_list *cur, t_list *redirect)
 			end->next = 0;
 		}
 	}
+	if (cur && !cur->next && !cur->content)
+		free(cur);
 }

@@ -6,60 +6,36 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 14:42:42 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:51:45 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_redirect_exec(t_list *cmd, t_list *redi, t_env *env)
+int	cmd_redirect_exec(t_cre *cre_head)
 {
 	pid_t	pid;
-	t_list	*tmp;
-	t_list	*tmp2;
+	t_cre	cre;
 
 	pid = fork();
+	cre.cmd = cre_head->cmd->next;
+	cre.redi = cre_head->redi->next;
+	cre.env = cre_head->env;
 	if (pid == 0)
-		parent(cmd->next, redi->next, env, ft_lstsize(cmd) - 1);
+	{
+		set_signal_parent();
+		sub_process(&cre, ft_lstsize(cre.cmd));
+	}
 	else if (pid < 0)
 		return (ERR);
 	else
 		wait(NULL);
-	while (cmd)
-	{
-		tmp = cmd;
-		double_free(cmd->content);
-		cmd = cmd->next;
-		free(tmp);
-	}
-	free(cmd);
-	while (redi)
-	{
-		tmp = redi;
-		tmp2 = redi->content;
-		ft_lstclear(&tmp2, free);
-		redi = redi->next;
-		free(tmp);
-	}
-	free(redi);
+	free_cmd_list(cre_head->cmd);
+	free_redirect_list(cre_head->redi);
 	return (OK);
 }
 
-int	**make_pipe_space(int size)
-{
-	int	**fds;
-	int	idx;
-
-	fds = (int **)calloc(size, sizeof(int *));
-	if (!fds)
-		exit(ERR);
-	idx = -1;
-	while (++idx < size)
-		fds[idx] = (int *)malloc(sizeof(int) * 2);
-	return (fds);
-}
-
-int	parent(t_list *cmd, t_list *redi, t_env *env, int size)
+int	sub_process(t_cre *cre, int size)
 {
 	pid_t	pid;
 	int		idx;
@@ -73,40 +49,37 @@ int	parent(t_list *cmd, t_list *redi, t_env *env, int size)
 			exit(ERR);
 		pid = fork();
 		if (pid == 0)
-		{
-			if (idx < size - 1)
-				dup2(fds[idx][1], STDOUT_FILENO);
-			close(fds[idx][0]);
-			close(fds[idx][1]);
-			if (exec_redirect((t_list *)redi->content) == ERR)
-				return (ERR);
-			if (command((char **)cmd->content, env) == ERR)
-				return (ERR);
-		}
+			child(cre, fds[idx], idx, size);
 		else if (pid < 0)
 			return (ERR);
 		else
-		{
-			if (idx < size - 1)
-				waitpid(pid, NULL, WNOHANG);
-			else
-				waitpid(pid, NULL, 0);
-			close(fds[idx][1]);
-			dup2(fds[idx][0], STDIN_FILENO);
-			close(fds[idx][0]);
-		}
-		cmd = cmd->next;
-		redi = redi->next;
+			parent(pid, fds[idx], idx, size);
+		cre->cmd = cre->cmd->next;
+		cre->redi = cre->redi->next;
 	}
 	exit(OK);
 	return (OK);
 }
 
-int	child(char **cmd, t_list *redirect, t_env *env)
+void	parent(int pid, int fd[], int idx, int size)
 {
-	if (exec_redirect(redirect) == ERR)
-		return (ERR);
-	if (command(cmd, env) == ERR)
-		return (ERR);
-	return (OK);
+	if (idx < size - 1)
+		waitpid(pid, NULL, WNOHANG);
+	else
+		waitpid(pid, NULL, 0);
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+}
+
+void	child(t_cre *cre, int fd[], int idx, int size)
+{
+	set_signal_child();
+	if (idx < size - 1)
+		dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	exec_redirect((t_list *)cre->redi->content);
+	if (command((char **)cre->cmd->content, cre->env) == ERR)
+		exit(ERR);
 }

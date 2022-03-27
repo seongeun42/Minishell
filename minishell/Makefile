@@ -6,15 +6,14 @@
 #    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/21 13:18:25 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/27 19:25:02 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 SRC_DIR = ./src/
 SRCS = src/main.c\
-		src/utils.c\
-		src/signal.c
+		src/utils.c
 
 CMD_DIR = ./src/cmd/
 CMDS = src/cmd/cd.c\
@@ -22,7 +21,8 @@ CMDS = src/cmd/cd.c\
 		src/cmd/env.c\
 		src/cmd/export.c\
 		src/cmd/pwd.c\
-		src/cmd/unset.c
+		src/cmd/unset.c\
+		src/cmd/exit.c
 
 ENV_DIR = ./src/envp/
 ENVS = src/envp/env_split.c\
@@ -40,11 +40,17 @@ PARS = src/parse/parsing.c\
 		src/parse/make_redirect_list.c
 
 PROCESS_DIR = ./src/process/
-PROCS = src/process/process2.c\
+PROCS = src/process/process.c\
 		src/process/exec_redirect.c\
-		src/process/exec_command.c
+		src/process/exec_command.c\
+		src/process/process_utils.c
 
-OBJS = $(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o) $(CMDS:.c=.o) $(PROCS:.c=.o)
+SIG_DIR = ./src/signal/
+SIGS = src/signal/signal.c\
+		src/signal/signal_child.c\
+		src/signal/signal_parent.c
+
+OBJS = $(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o) $(CMDS:.c=.o) $(PROCS:.c=.o) $(SIGS:.c=.o)
 NAME = minishell
 HEADER = -I include/
 #CFLAG = -Wall -Werror -Wextra
@@ -73,6 +79,9 @@ $(CMD_DIR)%.o: $(CMD_DIR)%.c
 	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 $(PARSE_DIR)%.o: $(PARSE_DIR)%.c
+	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+
+$(SIG_DIR)%.o: $(SIG_DIR)%.c
 	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
 
 clean:
