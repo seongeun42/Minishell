@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
+#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/27 19:25:02 by seongele         ###   ########.fr        #
+#    Updated: 2022/03/27 20:08:53 by sujo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,12 +58,23 @@ HEADER = -I include/
 LIBFT_DIR = ./libft
 LIBFT_NAME = libft.a
 
+# ============ color==============
+FG_YELLOW	=\e[33m
+FG_RED		=\e[31m
+FG_GREEN	=\e[32m
+FG_BLUE		=\e[34m
+FG_MAGENTA	=\e[35m
+FG_CYAN		=\e[36m
+FG_BRIGHT_Y	=\e[93m
+NO_COLOR	=\e[0m
+LF = \e[1K\r$(NO_COLOR)
+# ================================
 
 all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJS)
 	@$(CC) $(CFLAG) -L. -lft -o $@ $(OBJS) -lreadline $(LDFLAGS)
-	@printf "Minishell complete\n"
+	@printf "$(LF)$(FG_GREEN)Minishell complete\n$(NO_COLOR)"
 
 $(LIBFT_NAME):
 	@make -C $(LIBFT_DIR)
@@ -71,6 +82,7 @@ $(LIBFT_NAME):
 
 $(SRC_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER) $(CPPFLAGS)
+	@printf "$(LF)🔨 $(FG_MAGENTA)minishell 만드는 중 $(FG_CYAN)%-33.33s" $@
 
 $(ENV_DIR)%.o: $(ENV_DIR)%.c
 	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER)

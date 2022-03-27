@@ -19,15 +19,17 @@ FG_BLUE		=\e[34m
 FG_MAGENTA	=\e[35m
 FG_CYAN		=\e[36m
 NO_COLOR	=\e[0m
+LF = \e[1K\r$(NO_COLOR)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar -rc $(NAME) $^
-	@printf "$(FG_YELLOW)libft complete\n$(NO_COLOR)"
+	@printf "$(LF)$(FG_YELLOW)libft complete\n$(NO_COLOR)"
 
 %.o: %.c
 	@$(CC) $(CFLAG) -c -o $@ $< $(HEADER)
+	@printf "$(LF)🔨 $(FG_MAGENTA)libft 만드는 중 $(FG_CYAN)%-33.33s" $@
 
 clean:
 	@rm -f $(OBJS)
