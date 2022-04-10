@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 17:38:02 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:51:58 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	exec_redirect(t_list *redirect)
 	while (redi)
 	{
 		if (redi->next->split)
+		{
+			printf("mini: ambiguous redirect\n");
 			exit(ERR);
+		}
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))

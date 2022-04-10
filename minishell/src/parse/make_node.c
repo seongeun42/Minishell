@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:04:36 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 14:57:13 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:33:31 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**env_find(char *line, t_env *env_list, int *start)
 	key_env[0][++j] = 0;
 	key_env[1] = search_env(env_list, key_env[0]);
 	if (!ft_strncmp(key_env[0], "?", 3))
-		key_env[1] = ft_itoa(g_errcode);
+		key_env[1] = ft_itoa(g_err);
 	*start -= 1;
 	return (key_env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 15:23:40 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/21 16:25:53 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 16:42:35 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	sig_c(void)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_err = 1;
 }
 
 static void	sig_slash(void)

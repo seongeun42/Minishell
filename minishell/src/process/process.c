@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 19:44:35 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:44:49 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ int	cmd_redirect_exec(t_cre *cre_head)
 	else if (pid < 0)
 		return (ERR);
 	else
-		wait(&g_errcode);
+		wait(&g_err);
+	g_err = WEXITSTATUS(g_err);
 	free_cmd_list(cre_head->cmd);
 	free_redirect_list(cre_head->redi);
 	return (OK);
 }
 
-int	sub_process(t_cre *cre, int size)
+void	sub_process(t_cre *cre, int size)
 {
 	pid_t	pid;
 	int		idx;
@@ -51,22 +52,21 @@ int	sub_process(t_cre *cre, int size)
 		if (pid == 0)
 			child(cre, fds[idx], idx, size);
 		else if (pid < 0)
-			return (ERR);
+			exit(ERR);
 		else
 			parent(pid, fds[idx], idx, size);
 		cre->cmd = cre->cmd->next;
 		cre->redi = cre->redi->next;
 	}
-	exit(OK);
-	return (OK);
+	exit(WEXITSTATUS(g_err));
 }
 
 void	parent(int pid, int fd[], int idx, int size)
 {
 	if (idx < size - 1)
-		waitpid(pid, &g_errcode, WNOHANG);
+		waitpid(pid, &g_err, WNOHANG);
 	else
-		waitpid(pid, &g_errcode, 0);
+		waitpid(pid, &g_err, 0);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -80,6 +80,5 @@ void	child(t_cre *cre, int fd[], int idx, int size)
 	close(fd[0]);
 	close(fd[1]);
 	exec_redirect((t_list *)cre->redi->content);
-	if (command((char **)cre->cmd->content, cre->env) == ERR)
-		exit(ERR);
+	command((char **)cre->cmd->content, cre->env);
 }

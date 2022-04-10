@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:02:46 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/06 19:07:56 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:11:27 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 	if (line[i->start] == '<' || line[i->start] == '>')
 	{
 		if (i->filename == 1)
-			return (ERR);
+			return (parsing_err_message(line[i->start]));
 		ft_lstadd_back(head[1], make_node_and_add_index(line, env, i));
 		i->filename = 1;
 	}
 	else if (line[i->start] == '|')
 	{
-		if (i->pipe_close == 1)
-			return (ERR);
+		if (i->filename == 1 || i->pipe_close == 1)
+			return (parsing_err_message(line[i->start]));
 		ft_lstadd_back(head[0], new_node(0, 0));
 		ft_lstadd_back(head[1], make_node_and_add_index(line, env, i));
 	}

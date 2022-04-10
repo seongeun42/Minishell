@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 12:33:22 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 16:44:57 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	check_built_in(char *cmd)
 		return (1);
 	if (!ft_strncmp("unset", cmd, size))
 		return (1);
+	if (!ft_strncmp("exit", cmd, size))
+		return (1);
 	return (0);
 }
 
@@ -49,6 +51,8 @@ static int	execute_built_in(char **cmd, t_env *env)
 		return (ft_pwd());
 	if (!ft_strncmp("unset", cmd[0], size))
 		ft_unset(env, cmd);
+	if (!ft_strncmp("exit", cmd[0], size))
+		return (ft_exit(cmd));
 	return (OK);
 }
 
@@ -99,11 +103,11 @@ int	command(char **cmd, t_env *env)
 	int	is_built_in;
 
 	if (cmd == NULL)
-		return (ERR);
+		exit(127);
 	is_built_in = check_built_in(cmd[0]);
 	if (is_built_in)
 		return (execute_built_in(cmd, env));
 	execute_else(cmd, env);
 	printf("bash: %s: command not found\n", cmd[0]);
-	return (ERR);
+	exit(127);
 }

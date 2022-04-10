@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 19:40:25 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 15:33:55 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_signal_parent(void);
 void	set_signal_child(void);
 
 // global variant
-int		g_errcode;
+int		g_err;
 
 # include "parse.h"
 # include "process.h"

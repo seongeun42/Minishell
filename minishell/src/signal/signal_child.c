@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:26:05 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/21 16:26:22 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 16:43:14 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	sig_c_child(void)
 {
-	exit(0);
+	exit(130);
 }
 
 static void	sig_slash_child(void)

@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 14:55:36 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:01:19 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_idx
 
 // parse functions
 int		parsing(char *line, t_env *env, t_list *cmd, t_list *redi);
+int		parsing_err_message(char c);
 int		last_chr_check(char *line);
 
 // line split functions

@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 17:32:09 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 15:45:58 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // process functions
 int		cmd_redirect_exec(t_cre *cre);
-int		sub_process(t_cre *cre, int size);
+void	sub_process(t_cre *cre, int size);
 void	parent(int pid, int fd[], int idx, int size);
 void	child(t_cre *cre, int fd[], int idx, int size);
 
