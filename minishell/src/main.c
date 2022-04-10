@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 20:07:36 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 12:44:36 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@ int	check_export_unset_exit(char **cmd, int size, t_env *env)
 	if (size == 1)
 	{
 		if (!ft_strncmp("export", cmd[0], 7))
-		{
-			ft_export(env, cmd);
-			return (0);
-		}
-		if (!ft_strncmp("unset", cmd[0], 6))
-		{
-			ft_unset(env, cmd);
-			return (0);
-		}
-		if (!ft_strncmp("exit", cmd[0], 5))
+			g_errcode = ft_export(env, cmd);
+		else if (!ft_strncmp("unset", cmd[0], 6))
+			g_errcode = ft_unset(env, cmd);
+		else if (!ft_strncmp("cd", cmd[0], 3))
+			g_errcode = ft_cd(env, cmd[1]);
+		else if (!ft_strncmp("exit", cmd[0], 5))
 		{
 			g_errcode = ft_exit(cmd);
 			if (g_errcode >= 0)
@@ -34,10 +30,12 @@ int	check_export_unset_exit(char **cmd, int size, t_env *env)
 				printf("exit\n");
 				exit(g_errcode);
 			}
-			return (g_errcode);
 		}
+		else
+			return (-256);
+		return (g_errcode);
 	}
-	return (1);
+	return (-256);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -64,7 +62,12 @@ int	main(int argc, char *argv[], char *envp[])
 				continue ;
 			parsing(str, env, cmd, redirect);
 			if (check_export_unset_exit((char **)cmd->next->content,
-					ft_lstsize(cmd) - 1, env) == 1)
+					ft_lstsize(cmd) - 1, env) != -256)
+			{
+				free_cmd_list(cmd);
+				free_redirect_list(redirect);
+			}
+			else
 			{
 				cre.cmd = cmd;
 				cre.redi = redirect;
