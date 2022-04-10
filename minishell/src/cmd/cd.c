@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:05:19 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 17:44:45 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 14:15:40 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int	update_cd(int result, t_env *start, char *old_path, char *origin)
 	char	*old_pwd;
 	char	*new_pwd;
 	char	*new_path;
-	t_env	*new_node;
 
 	if (result == 0)
 	{
@@ -92,7 +91,6 @@ int	ft_cd(t_env *start, char *path)
 	int		result;
 	char	*old_path;
 	char	*new_path;
-	t_env	*new_node;
 
 	old_path = get_pwd();
 	if (path == NULL || !ft_strncmp(path, "~", 2))

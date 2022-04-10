@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 19:10:35 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 19:54:46 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:15:09 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	pipe_list_free(t_list **cur, t_list **redirect)
 
 void	split_redi_list(t_list *cur, t_list *redirect)
 {
-	t_list	*start;
 	t_list	*end;
 
 	while (cur && cur->next)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: seongele <seongele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/14 06:24:59 by sujo              #+#    #+#              #
-#    Updated: 2022/03/27 20:08:53 by sujo             ###   ########.fr        #
+#    Updated: 2022/04/10 14:04:03 by seongele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ SIGS = src/signal/signal.c\
 OBJS = $(SRCS:.c=.o) $(ENVS:.c=.o) $(PARS:.c=.o) $(CMDS:.c=.o) $(PROCS:.c=.o) $(SIGS:.c=.o)
 NAME = minishell
 HEADER = -I include/
-#CFLAG = -Wall -Werror -Wextra
+CFLAG = -Wall -Werror -Wextra
 #CFLAG = -fsanitize=address
 LIBFT_DIR = ./libft
 LIBFT_NAME = libft.a

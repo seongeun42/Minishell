@@ -6,11 +6,19 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 12:44:36 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 15:00:17 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	print_main(int argc, char *argv[])
+{
+	printf("\033[32mMinishell\033[0m\n");
+	(void)argc;
+	(void)argv;
+	return (0);
+}
 
 int	check_export_unset_exit(char **cmd, int size, t_env *env)
 {
@@ -46,6 +54,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_list	*cmd;
 	t_list	*redirect;
 
+	if (print_main(argc, argv))
+		return (ERR);
 	dup2(STDIN_FILENO, BACKUP_STDIN);
 	dup2(STDOUT_FILENO, BACKUP_STDOUT);
 	env = NULL;
@@ -78,7 +88,10 @@ int	main(int argc, char *argv[], char *envp[])
 			free(str);
 		}
 		else
+		{
+			printf("exit\n");
 			break ;
+		}
 	}
 	return (0);
 }
