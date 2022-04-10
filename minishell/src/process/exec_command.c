@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/20 19:06:38 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 12:33:22 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static int	execute_else(char **cmd, t_env *env)
 	exec_envp = env_get(env);
 	idx = 0;
 	execve(cmd[0], cmd, exec_envp);
+	execve(get_pwd(), cmd, exec_envp);
 	while (split_path[idx])
 	{
 		new_path = create_new_path(split_path[idx], cmd[0]);
@@ -89,7 +90,6 @@ static int	execute_else(char **cmd, t_env *env)
 		free(new_path);
 		idx++;
 	}
-	//double_free(exec_envp);
 	double_free(split_path);
 	return (ERR);
 }
