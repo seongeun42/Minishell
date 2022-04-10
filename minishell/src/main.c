@@ -6,13 +6,13 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 19:40:45 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 20:07:36 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_export_unset(char **cmd, int size, t_env *env)
+int	check_export_unset_exit(char **cmd, int size, t_env *env)
 {
 	if (size == 1)
 	{
@@ -40,7 +40,7 @@ int	check_export_unset(char **cmd, int size, t_env *env)
 	return (1);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*str;
 	t_cre	cre;
@@ -53,8 +53,7 @@ int main(int argc, char *argv[], char *envp[])
 	env = NULL;
 	set_signal();
 	env_parsing(envp, &env);
-	int k = 1;
-	while(1)
+	while (1)
 	{
 		cmd = ft_lstnew(0);
 		redirect = ft_lstnew(0);
@@ -64,8 +63,8 @@ int main(int argc, char *argv[], char *envp[])
 			if (!ft_strlen(str))
 				continue ;
 			parsing(str, env, cmd, redirect);
-			if (check_export_unset((char **)cmd->next->content,
-				ft_lstsize(cmd) - 1, env) == 1)
+			if (check_export_unset_exit((char **)cmd->next->content,
+					ft_lstsize(cmd) - 1, env) == 1)
 			{
 				cre.cmd = cmd;
 				cre.redi = redirect;
@@ -78,5 +77,5 @@ int main(int argc, char *argv[], char *envp[])
 		else
 			break ;
 	}
-	return(0);
+	return (0);
 }

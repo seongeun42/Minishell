@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 19:10:35 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 19:15:28 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:54:46 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,21 @@ int	make_redirect_list(t_list *redi, int size)
 	return (OK);
 }
 
-// 노미 고쳐야 함
+static int	pipe_list_free(t_list **cur, t_list **redirect)
+{
+	t_list	*end;
+
+	if (!(*cur)->content)
+	{
+		end = *cur;
+		*cur = (*cur)->next;
+		free(end);
+		*redirect = (*redirect)->next;
+		return (1);
+	}
+	return (0);
+}
+
 void	split_redi_list(t_list *cur, t_list *redirect)
 {
 	t_list	*start;
@@ -34,14 +48,8 @@ void	split_redi_list(t_list *cur, t_list *redirect)
 
 	while (cur && cur->next)
 	{
-		if (!cur->content)
-		{
-			end = cur;
-			cur = cur->next;
-			free(end);
-			redirect = redirect->next;
+		if (pipe_list_free(&cur, &redirect))
 			continue ;
-		}
 		redirect->content = cur;
 		redirect = redirect->next;
 		while (cur->next && cur->next->content)

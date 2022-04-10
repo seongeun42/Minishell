@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:56:57 by seongele          #+#    #+#             */
-/*   Updated: 2022/02/13 17:41:14 by seongele         ###   ########.fr       */
+/*   Updated: 2022/03/27 19:49:31 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ char	*memory_fit(char *value)
 
 void	double_free(char **str)
 {
-	size_t i;
+	size_t	i;
 
 	if (!str)
-		return;
+		return ;
 	i = -1;
 	while (str[++i])
 		free(str[i]);
