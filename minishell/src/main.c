@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 18:19:39 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 19:35:39 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	print_main(int argc, char *argv[])
 {
-	printf("\033[32mMinishell\033[0m\n");
+	printf("\n\e[100m\e[96m       Minishell       \e[0m\n");
+	printf("\e[36m _____           _____ \n");
+	printf("/  ___|         /  ___|\n");
+	printf("\\ `--.   \e[32m_ __\e[36m   \\ `--. \n");
+	printf(" `--. \\ \e[32m| '_ \\\e[36m   `--. \\\n");
+	printf("/\\__/ / \e[32m| | | |\e[36m /\\__/ /\n");
+	printf("\\____/  \e[32m|_| |_|\e[36m \\____/ \e[0m\n\n");
 	(void)argc;
 	(void)argv;
 }
@@ -91,7 +97,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		cmd = ft_lstnew(0);
 		redirect = ft_lstnew(0);
-		str = readline("\033[32mprompt > \033[0m");
+		str = readline("\e[94mprompt > \e[0m");
 		if (str)
 			go_to_exec(str, cmd, redirect, env);
 		else

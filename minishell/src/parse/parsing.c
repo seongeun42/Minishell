@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 18:15:55 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 19:02:34 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	parsing_err_message(char c)
 {
-	printf("mini: syntax error near unexpected token '%c'\n", c);
+	printf("SnS: syntax error near unexpected token '%c'\n", c);
 	return (ERR);
 }
 

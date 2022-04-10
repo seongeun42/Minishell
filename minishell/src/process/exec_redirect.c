@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 18:46:12 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 19:03:00 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_redirect(t_list *redirect)
 	{
 		if (redi->next->split)
 		{
-			printf("mini: ambiguous redirect\n");
+			printf("SnS: ambiguous redirect\n");
 			exit(ERR);
 		}
 		if (!ft_strncmp((char *)redi->content, "<", 3))

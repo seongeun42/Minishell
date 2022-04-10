@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 18:59:28 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 19:03:14 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_export(t_env *start, char **str)
 			if (check_key(str[idx]))
 			{
 				flag = 1;
-				printf("bash: export: '%s': not a valid identifier\n", str[idx]);
+				printf("SnS: export: '%s': not a valid identifier\n", str[idx]);
 			}
 			else
 				cmd_insert_env_node(&start, str[idx]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 17:06:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 16:40:15 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:03:23 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ int	ft_exit(char **cmd)
 		is_num = argu_is_num(cmd[1]);
 	if (!is_num)
 	{
-		printf("bash: exit: %s: numeric argument required\n", cmd[1]);
+		printf("SnS: exit: %s: numeric argument required\n", cmd[1]);
 		exit(255);
 	}
 	if (size > 2)
 	{
-		printf("bash: exit: too many arguments\n");
+		printf("SnS: exit: too many arguments\n");
 		exit(1);
 	}
 	result = ato_ll(cmd[1]);
 	if (result != -1)
 		exit(result);
-	printf("bash: exit: %s: numeric argument required\n", cmd[1]);
+	printf("SnS: exit: %s: numeric argument required\n", cmd[1]);
 	exit(255);
 }

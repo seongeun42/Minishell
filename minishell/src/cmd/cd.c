@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:05:19 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 14:15:40 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:03:57 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,14 @@ static int	update_cd(int result, t_env *start, char *old_path, char *origin)
 	else
 	{
 		if (check_is_file(origin))
-			printf("bash: cd: %s: Not a directory\n", origin);
+			printf("SnS: cd: %s: Not a directory\n", origin);
 		else
-			printf("bash: cd: %s: No such file or directory\n", origin);
+			printf("SnS: cd: %s: No such file or directory\n", origin);
 		free(old_path);
 		return (ERR);
 	}
 }
 
-//인자를 여러개 받아도 처음 한개만을 인식
 int	ft_cd(t_env *start, char *path)
 {
 	int		result;
@@ -98,7 +97,7 @@ int	ft_cd(t_env *start, char *path)
 		new_path = search_env(start, "HOME");
 		if (new_path == NULL)
 		{
-			printf("bash: cd: HOME not set\n");
+			printf("SnS: cd: HOME not set\n");
 			free(old_path);
 			return (ERR);
 		}
