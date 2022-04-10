@@ -6,13 +6,13 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:05:19 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/27 17:44:45 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 12:25:14 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_pwd(void)
+char	*get_pwd(void)
 {
 	int		size;
 	char	*buffer;

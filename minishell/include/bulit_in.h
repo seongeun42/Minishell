@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bulit_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:09:45 by seongele          #+#    #+#             */
 /*   Updated: 2022/04/10 12:32:41 by seongele         ###   ########.fr       */
@@ -43,5 +43,6 @@ int		ft_pwd(void);
 int		ft_exit(char **cmd);
 int		ft_cd(t_env *start, char *path);
 int		ft_unset(t_env *start, char **key);
+char	*get_pwd(void);
 
 #endif
