@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 14:15:56 by sujo              #+#    #+#             */
-/*   Updated: 2022/03/20 16:04:07 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 14:58:25 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	env_copy(t_env *env, char **result)
 
 char	**env_get(t_env *env)
 {
-	int		idx;
 	int		size;
 	char	**result;
 

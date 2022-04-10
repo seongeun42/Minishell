@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 16:52:58 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:55:36 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i);
 // make node functions
 t_list	*new_node(char *value, int split_flag);
 t_list	*make_node(char *line, t_env *env_list, int start, int end);
-char	*env_find(char *line, t_env *env_list, int *start);
-char	*env_substitude(char *value, char *env, int *i, int size);
+char	**env_find(char *line, t_env *env_list, int *start);
+char	*env_substitude(char *value, char **key_env, int *i);
 
 // add space between redirect / pipe functions
 char	*redirect_pipe_space_add(char *line, int cnt);
