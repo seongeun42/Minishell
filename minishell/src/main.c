@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 16:45:00 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 18:01:16 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	print_main(int argc, char *argv[])
+void	print_main(int argc, char *argv[])
 {
 	printf("\033[32mMinishell\033[0m\n");
 	(void)argc;
 	(void)argv;
-	return (0);
 }
 
 int	check_export_unset_exit(char **cmd, int size, t_env *env)
@@ -33,57 +32,61 @@ int	check_export_unset_exit(char **cmd, int size, t_env *env)
 		else if (!ft_strncmp("exit", cmd[0], 5))
 			ft_exit(cmd);
 		else
-			return (-256);
+			return (-1);
 		return (g_err);
 	}
-	return (-256);
+	return (-1);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+static t_env	*init(int argc, char **argv, char **envp)
 {
-	char	*str;
-	t_cre	cre;
 	t_env	*env;
-	t_list	*cmd;
-	t_list	*redirect;
 
-	if (print_main(argc, argv))
-		return (ERR);
+	print_main(argc, argv);
 	dup2(STDIN_FILENO, BACKUP_STDIN);
 	dup2(STDOUT_FILENO, BACKUP_STDOUT);
 	env = NULL;
 	set_signal();
 	env_parsing(envp, &env);
+	return (env);
+}
+
+static void	go_to_exec(char *str, t_list *cmd, t_list *redi, t_env *env)
+{
+	if (!ft_strlen(str))
+		return ;
+	if (!parsing(str, env, cmd, redi))
+	{
+		if (check_export_unset_exit((char **)cmd->next->content,
+				ft_lstsize(cmd) - 1, env) != -1)
+		{
+			free_cmd_list(cmd);
+			free_redirect_list(redi);
+		}
+		else
+			cmd_redirect_exec(cmd, redi, env);
+	}
+	else
+		g_err = 258;
+	add_history(str);
+	free(str);
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	char	*str;
+	t_env	*env;
+	t_list	*cmd;
+	t_list	*redirect;
+
+	env = init(argc, argv, envp);
 	while (1)
 	{
 		cmd = ft_lstnew(0);
 		redirect = ft_lstnew(0);
 		str = readline("\033[32mprompt > \033[0m");
 		if (str)
-		{
-			if (!ft_strlen(str))
-				continue ;
-			if (!parsing(str, env, cmd, redirect))
-			{
-				if (check_export_unset_exit((char **)cmd->next->content,
-						ft_lstsize(cmd) - 1, env) != -256)
-				{
-					free_cmd_list(cmd);
-					free_redirect_list(redirect);
-				}
-				else
-				{
-					cre.cmd = cmd;
-					cre.redi = redirect;
-					cre.env = env;
-					cmd_redirect_exec(&cre);
-				}
-			}
-			else
-				g_err = 258;
-			add_history(str);
-			free(str);
-		}
+			go_to_exec(str, cmd, redirect, env);
 		else
 		{
 			printf("exit\n");

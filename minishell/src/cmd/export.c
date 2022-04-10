@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 14:37:42 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 18:04:22 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ static int	check_key(char *str)
 int	ft_export(t_env *start, char **str)
 {
 	int	idx;
+	int	flag;
 
+	flag = 0;
 	if (str[1] == NULL)
 		display_export(start);
 	else
@@ -40,11 +42,14 @@ int	ft_export(t_env *start, char **str)
 		while (str[idx])
 		{
 			if (check_key(str[idx]))
+			{
+				flag = 1;
 				printf("bash: export: '%s': not a valid identifier\n", str[idx]);
+			}
 			else
 				cmd_insert_env_node(&start, str[idx]);
 			idx++;
 		}
 	}
-	return (OK);
+	return (flag);
 }

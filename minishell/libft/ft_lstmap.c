@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 18:50:23 by seongele          #+#    #+#             */
-/*   Updated: 2021/05/08 11:55:56 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:16:06 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	all_del(t_list *lst, void (*d)(void *))
 	}
 }
 
-t_list		*ft_lstmap(t_list *s, void *(*f)(void *), void (*d)(void *))
+t_list	*ft_lstmap(t_list *s, void *(*f)(void *), void (*d)(void *))
 {
 	t_list	*new_list;
 	t_list	*new_head;

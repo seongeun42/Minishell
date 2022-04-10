@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:09:45 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 12:32:41 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:47:01 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define BULIT_IN_H
 
 // envp struct
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*key;
-	char			*value;
-}	t_env;
+// typedef struct s_env
+// {
+// 	struct s_env	*next;
+// 	char			*key;
+// 	char			*value;
+// }	t_env;
 
 // envp function
 int		env_parsing(char *envp[], t_env **list);
@@ -36,6 +36,7 @@ char	**env_get(t_env *env);
 
 // built in
 # define LL_MAX 9223372036854775807
+
 void	ft_env(t_env *start);
 void	ft_echo(char **cmd);
 int		ft_export(t_env *start, char **str);

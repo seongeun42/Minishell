@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:14 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 15:45:58 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:26:53 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PROCESS_H
 
 // process functions
-int		cmd_redirect_exec(t_cre *cre);
+int		cmd_redirect_exec(t_list *cmd, t_list *redi, t_env *env);
 void	sub_process(t_cre *cre, int size);
 void	parent(int pid, int fd[], int idx, int size);
 void	child(t_cre *cre, int fd[], int idx, int size);

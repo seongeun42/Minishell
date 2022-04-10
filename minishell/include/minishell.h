@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 15:33:55 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:54:40 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include "struct.h"
 # include "bulit_in.h"
-
-typedef struct s_cre
-{
-	t_list	*cmd;
-	t_list	*redi;
-	t_env	*env;
-}	t_cre;
+# include "parse.h"
+# include "process.h"
 
 // util functions
 char	*memory_fit(char *value);
@@ -55,9 +51,5 @@ void	set_signal_child(void);
 
 // global variant
 int		g_err;
-
-# include "parse.h"
-# include "process.h"
-
 
 #endif

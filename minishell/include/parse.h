@@ -3,34 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 17:01:19 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:56:11 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# define ERRCODE_ABNOMAl_LINE 258
-
-// flag struct
-typedef struct s_flag
-{
-	int	env_chg;
-	int	space;
-	int	bigq;
-	int	smallq;
-}	t_flag;
-
-typedef struct s_idx
-{
-	int	start;
-	int	current;
-	int	filename;
-	int	pipe_close;
-}	t_idx;
+# define ERRCODE_ABNOMAL_LINE 258
 
 // parse functions
 int		parsing(char *line, t_env *env, t_list *cmd, t_list *redi);

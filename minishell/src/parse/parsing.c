@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 17:53:11 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 17:02:18 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:56:40 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	parsing(char *line, t_env *env, t_list *cmd, t_list *redi)
 	head[0] = &cmd;
 	head[1] = &redi;
 	if (last_chr_check(line) == ERR)
-		return (ERRCODE_ABNOMAl_LINE);
+		return (ERRCODE_ABNOMAL_LINE);
 	redi_cnt = redirect_pipe_count(line);
 	if (line_split(redirect_pipe_space_add(line, redi_cnt), env, head) == ERR)
 	{
 		ft_lstclear(&(redi->next), free);
 		ft_lstclear(&(cmd->next), free);
 		free(head);
-		return (ERRCODE_ABNOMAl_LINE);
+		return (ERRCODE_ABNOMAL_LINE);
 	}
 	else
 	{

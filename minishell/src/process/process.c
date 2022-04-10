@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 16:44:49 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 17:27:02 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_redirect_exec(t_cre *cre_head)
+int	cmd_redirect_exec(t_list *cmd, t_list *redi, t_env *env)
 {
 	pid_t	pid;
 	t_cre	cre;
 
 	pid = fork();
-	cre.cmd = cre_head->cmd->next;
-	cre.redi = cre_head->redi->next;
-	cre.env = cre_head->env;
+	cre.cmd = cmd->next;
+	cre.redi = redi->next;
+	cre.env = env;
 	if (pid == 0)
 	{
 		set_signal_parent();
@@ -31,8 +31,8 @@ int	cmd_redirect_exec(t_cre *cre_head)
 	else
 		wait(&g_err);
 	g_err = WEXITSTATUS(g_err);
-	free_cmd_list(cre_head->cmd);
-	free_redirect_list(cre_head->redi);
+	free_cmd_list(cmd);
+	free_redirect_list(redi);
 	return (OK);
 }
 
