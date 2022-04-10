@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 12:09:26 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 14:37:42 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	check_key(char *str)
 	if (str[0] == '=')
 		return (ERR);
 	idx = 0;
-	while (str[idx] || str[idx] != '=')
+	while (str[idx] && str[idx] != '=')
 	{
-		if (ft_isalnum(str[idx]))
+		if (!ft_isalnum(str[idx]))
 			return (ERR);
 		idx++;
 	}
