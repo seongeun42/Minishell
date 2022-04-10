@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 18:01:16 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 18:19:39 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ static t_env	*init(int argc, char **argv, char **envp)
 
 static void	go_to_exec(char *str, t_list *cmd, t_list *redi, t_env *env)
 {
+	int	idx;
+
+	idx = -1;
 	if (!ft_strlen(str))
+		return ;
+	while (str[++idx] == ' ')
+		;
+	if (str[idx] == '\0')
 		return ;
 	if (!parsing(str, env, cmd, redi))
 	{

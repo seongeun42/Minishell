@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 16:51:58 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/10 18:46:12 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_redirect(t_list *redirect)
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
 			input_redirect_exec((char *)redi->next->content, 0);
-		else if (!!ft_strncmp((char *)redi->content, ">", 3))
+		else if (!ft_strncmp((char *)redi->content, ">", 3))
 			output_redirect_exec((char *)redi->next->content, 1);
 		else
 			output_redirect_exec((char *)redi->next->content, 0);

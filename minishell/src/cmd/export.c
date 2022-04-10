@@ -6,7 +6,7 @@
 /*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 18:04:22 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/10 18:59:28 by sujo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static int	check_key(char *str)
 {
 	int	idx;
 
-	if (str[0] == '=')
+	if (str[0] == '=' || ft_isdigit(str[0]))
 		return (ERR);
 	idx = 0;
 	while (str[idx] && str[idx] != '=')
 	{
-		if (!ft_isalnum(str[idx]))
+		if (!ft_isalnum(str[idx]) && str[idx] != '_')
 			return (ERR);
 		idx++;
 	}
