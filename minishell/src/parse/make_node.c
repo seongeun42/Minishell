@@ -32,35 +32,6 @@ static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 		value[(*i)++] = c;
 }
 
-t_list	*make_node(char *line, t_env *env_list, int start, int end)
-{
-	char	*value;
-	int		node_split_flag;
-	int		i;
-	t_flag	f;
-
-	f = (t_flag){1, 1, 0, 0};
-	value = (char *)ft_calloc(end - start + 1, sizeof(char));
-	if (!value)
-		return (0);
-	node_split_flag = 0;
-	i = 0;
-	while (start < end)
-	{
-		if (f.env_chg && line[start] == '$')
-		{
-			value = env_substitude(value,
-					env_find(line, env_list, &start), &i);
-			if (!f.bigq)
-				node_split_flag = 1;
-		}
-		else
-			make_node_flag_change(line[start], &f, value, &i);
-		++start;
-	}
-	return (new_node(memory_fit(value), node_split_flag));
-}
-
 t_list	*new_node(char *value, int split_flag)
 {
 	t_list	*node;
@@ -69,6 +40,31 @@ t_list	*new_node(char *value, int split_flag)
 	if (split_flag)
 		node->split = 1;
 	return (node);
+}
+
+char	**env_find(char *line, t_env *env_list, int *start)
+{
+	int		i;
+	int		j;
+	char	**key_env;
+
+	i = *start;
+	while (line[*start] && line[*start] != ' '
+		&& line[*start] != '\'' && line[*start] != '"')
+		++(*start);
+	key_env = (char **)malloc(sizeof(char *) * 2);
+	key_env[0] = (char *)ft_calloc(*start - i, sizeof(char));
+	if (!key_env[0])
+		return (0);
+	j = -1;
+	while (++i < *start)
+		key_env[0][++j] = line[i];
+	key_env[0][++j] = 0;
+	key_env[1] = search_env(env_list, key_env[0]);
+	if (!ft_strncmp(key_env[0], "?", 3))
+		key_env[1] = ft_itoa(g_err);
+	*start -= 1;
+	return (key_env);
 }
 
 char	*env_substitude(char *value, char **key_env, int *i)
@@ -96,27 +92,32 @@ char	*env_substitude(char *value, char **key_env, int *i)
 	return (new_v);
 }
 
-char	**env_find(char *line, t_env *env_list, int *start)
-{
-	int		i;
-	int		j;
-	char	**key_env;
 
-	i = *start;
-	while (line[*start] && line[*start] != ' '
-		&& line[*start] != '\'' && line[*start] != '"')
-		++(*start);
-	key_env = (char **)malloc(sizeof(char *) * 2);
-	key_env[0] = (char *)ft_calloc(*start - i, sizeof(char));
-	if (!key_env[0])
+t_list	*make_node(char *line, t_env *env_list, int start, int end)
+{
+	char	*value;
+	int		node_split_flag;
+	int		i;
+	t_flag	f;
+
+	f = (t_flag){1, 1, 0, 0};
+	value = (char *)ft_calloc(end - start + 1, sizeof(char));
+	if (!value)
 		return (0);
-	j = -1;
-	while (++i < *start)
-		key_env[0][++j] = line[i];
-	key_env[0][++j] = 0;
-	key_env[1] = search_env(env_list, key_env[0]);
-	if (!ft_strncmp(key_env[0], "?", 3))
-		key_env[1] = ft_itoa(g_err);
-	*start -= 1;
-	return (key_env);
+	node_split_flag = 0;
+	i = 0;
+	while (start < end)
+	{
+		if (f.env_chg && line[start] == '$')
+		{
+			value = env_substitude(value,
+					env_find(line, env_list, &start), &i);
+			if (!f.bigq)
+				node_split_flag = 1;
+		}
+		else
+			make_node_flag_change(line[start], &f, value, &i);
+		++start;
+	}
+	return (new_node(memory_fit(value), node_split_flag));
 }

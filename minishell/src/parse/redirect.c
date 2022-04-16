@@ -64,7 +64,7 @@ void	redirect_pipe_check_and_add(char *new_l, char **l, int *i, char c)
 		new_l[(*i)++] = ' ';
 }
 
-char	*redirect_pipe_space_add(char *line, int cnt)
+char	*redirect_pipe_add_space(char *line, int cnt)
 {
 	t_flag	f;
 	char	*new_line;

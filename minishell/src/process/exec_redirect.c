@@ -74,7 +74,7 @@ int	input_redirect_exec(char *filename, int mode)
 		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
-		return (ERR);
+		exit(ERR);
 	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);

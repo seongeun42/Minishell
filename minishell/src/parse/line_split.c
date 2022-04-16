@@ -36,29 +36,37 @@ static void	line_split_flag_change(char c, t_flag *f)
 	}
 }
 
-int	line_split(char *line, t_env *env, t_list ***head)
+void	line_split_last_arg(char *line, t_env *env, t_list **head[], t_idx *i)
 {
-	t_flag	f;
-	t_idx	i;
-
-	f = (t_flag){1, 1, 0, 0};
-	i.start = 0;
-	while (line[i.start] == ' ')
-		++i.start;
-	i = (t_idx){i.start, i.start - 1, 0, 0};
-	while (line[++i.current])
+	if (i->start != i->current)
 	{
-		if (f.space && line[i.current] == ' ')
-		{
-			if (line_split_add_node(line, env, head, &i) == ERR)
-				return (ERR);
-		}
-		else if (line[i.current] == '"' || line[i.current] == '\'')
-			line_split_flag_change(line[i.current], &f);
+		if (i->filename)
+			ft_lstadd_back(head[1],
+				make_node(line, env, i->start, i->current));
+		else
+			ft_lstadd_back(head[0],
+				make_node(line, env, i->start, i->current));
 	}
-	line_split_last_arg(line, env, head, &i);
-	free(line);
-	return (OK);
+}
+
+t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i)
+{
+	t_list	*node;
+
+	if (line[i->start] == '|')
+	{
+		i->pipe_close = 1;
+		node = new_node(0, 0);
+	}
+	else
+	{
+		i->pipe_close = 0;
+		node = make_node(line, env, i->start, i->current);
+	}
+	while (line[i->current] == ' ')
+		++i->current;
+	i->start = i->current--;
+	return (node);
 }
 
 int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
@@ -87,35 +95,27 @@ int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 	return (OK);
 }
 
-t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i)
+int	line_split(char *line, t_env *env, t_list ***head)
 {
-	t_list	*node;
+	t_flag	f;
+	t_idx	i;
 
-	if (line[i->start] == '|')
+	f = (t_flag){1, 1, 0, 0};
+	i.start = 0;
+	while (line[i.start] == ' ')
+		++i.start;
+	i = (t_idx){i.start, i.start - 1, 0, 0};
+	while (line[++i.current])
 	{
-		i->pipe_close = 1;
-		node = new_node(0, 0);
+		if (f.space && line[i.current] == ' ')
+		{
+			if (line_split_add_node(line, env, head, &i) == ERR)
+				return (ERR);
+		}
+		else if (line[i.current] == '"' || line[i.current] == '\'')
+			line_split_flag_change(line[i.current], &f);
 	}
-	else
-	{
-		i->pipe_close = 0;
-		node = make_node(line, env, i->start, i->current);
-	}
-	while (line[i->current] == ' ')
-		++i->current;
-	i->start = i->current--;
-	return (node);
-}
-
-void	line_split_last_arg(char *line, t_env *env, t_list **head[], t_idx *i)
-{
-	if (i->start != i->current)
-	{
-		if (i->filename)
-			ft_lstadd_back(head[1],
-				make_node(line, env, i->start, i->current));
-		else
-			ft_lstadd_back(head[0],
-				make_node(line, env, i->start, i->current));
-	}
+	line_split_last_arg(line, env, head, &i);
+	free(line);
+	return (OK);
 }

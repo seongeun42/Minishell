@@ -33,15 +33,15 @@ char	**env_find(char *line, t_env *env_list, int *start);
 char	*env_substitude(char *value, char **key_env, int *i);
 
 // add space between redirect / pipe functions
-char	*redirect_pipe_space_add(char *line, int cnt);
+char	*redirect_pipe_add_space(char *line, int cnt);
 void	redirect_pipe_check_and_add(char *new_l, char **l, int *i, char c);
 int		redirect_pipe_count(char *line);
 
 // make cmd array list functions
+int		count_size(t_list *cur);
 int		make_cmd_list(t_list *cmd_list);
 char	**make_cmd_array(t_list *list);
 char	**array_resize_and_copy(char **old, char **strs, int a_size, int *idx);
-int		count_size(t_list *cur);
 
 // make redirect list functions
 int		make_redirect_list(t_list *redi, int size);

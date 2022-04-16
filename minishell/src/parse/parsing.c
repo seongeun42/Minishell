@@ -41,7 +41,7 @@ int	parsing(char *line, t_env *env, t_list *cmd, t_list *redi)
 	if (last_chr_check(line) == ERR)
 		return (ERRCODE_ABNOMAL_LINE);
 	redi_cnt = redirect_pipe_count(line);
-	if (line_split(redirect_pipe_space_add(line, redi_cnt), env, head) == ERR)
+	if (line_split(redirect_pipe_add_space(line, redi_cnt), env, head) == ERR)
 	{
 		ft_lstclear(&(redi->next), free);
 		ft_lstclear(&(cmd->next), free);
