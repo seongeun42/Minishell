@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// 동적할당한 메모리 크기를 딱 맞춰주기 위한 함수
 char	*memory_fit(char *value)
 {
 	char	*new_value;

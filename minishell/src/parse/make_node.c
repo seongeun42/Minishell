@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// 큰 따옴표, 작은 따옴표, 환경변수 치환 여부 플래그 변환
 static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 {
 	if (c == '"' && !f->bigq && !f->smallq)
@@ -32,6 +33,7 @@ static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 		value[(*i)++] = c;
 }
 
+// 새로운 노드를 생성하고 split 여부를 표시하는 함수
 t_list	*new_node(char *value, int split_flag)
 {
 	t_list	*node;
@@ -42,6 +44,7 @@ t_list	*new_node(char *value, int split_flag)
 	return (node);
 }
 
+// 환경 변수 리스트에서 일치하는 환경 변수를 찾는 함수
 char	**env_find(char *line, t_env *env_list, int *start)
 {
 	int		i;
@@ -67,6 +70,7 @@ char	**env_find(char *line, t_env *env_list, int *start)
 	return (key_env);
 }
 
+// 환경 변수를 값으로 치환하는 함수
 char	*env_substitude(char *value, char **key_env, int *i)
 {
 	char	*tmp;
@@ -92,7 +96,7 @@ char	*env_substitude(char *value, char **key_env, int *i)
 	return (new_v);
 }
 
-
+// 토큰을 list에 추가할 수 있는 노드로 만드는 함수
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
 {
 	char	*value;

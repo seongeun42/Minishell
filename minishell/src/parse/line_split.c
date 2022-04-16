@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// 큰 따옴표, 작은 따옴표, 스페이스 플래그 변환 함수
 static void	line_split_flag_change(char c, t_flag *f)
 {
 	if (c == '"' && !f->bigq && !f->smallq)
@@ -36,8 +37,10 @@ static void	line_split_flag_change(char c, t_flag *f)
 	}
 }
 
+// 가장 마지막 토큰을 cmd or redirect list에 추가하는 함수
 void	line_split_last_arg(char *line, t_env *env, t_list **head[], t_idx *i)
 {
+	// 만약 마지막 토큰을 처리하지 않았다면 처리함
 	if (i->start != i->current)
 	{
 		if (i->filename)
@@ -49,10 +52,12 @@ void	line_split_last_arg(char *line, t_env *env, t_list **head[], t_idx *i)
 	}
 }
 
+// 토큰을 노드로 만들고, 문자열 idx 옮기는 함수
 t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i)
 {
 	t_list	*node;
 
+	// 추가할 토큰이 파이프라면, 빈 노드 만들기
 	if (line[i->start] == '|')
 	{
 		i->pipe_close = 1;
@@ -69,6 +74,7 @@ t_list	*make_node_and_add_index(char *line, t_env *env, t_idx *i)
 	return (node);
 }
 
+// 토큰을 노드로 만들어 cmd와 redirect로 구분해 각각의 list에 추가하는 함수
 int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 {
 	if (line[i->start] == '<' || line[i->start] == '>')
@@ -80,6 +86,7 @@ int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 	}
 	else if (line[i->start] == '|')
 	{
+		// 파일명이 없거나, 명령어가 없으면 에러
 		if (i->filename == 1 || i->pipe_close == 1)
 			return (parsing_err_message(line[i->start]));
 		ft_lstadd_back(head[0], new_node(0, 0));
@@ -95,6 +102,7 @@ int	line_split_add_node(char *line, t_env *env, t_list ***head, t_idx *i)
 	return (OK);
 }
 
+// 명령줄을 공백을 기준으로 잘라 각 토큰을 cmd와 redirect로 구분해 각각의 list로 만드는 함수
 int	line_split(char *line, t_env *env, t_list ***head)
 {
 	t_flag	f;

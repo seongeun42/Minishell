@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// 파이프 fd 저장할 배열 동적할당 하는 함수
 int	**make_pipe_space(int size)
 {
 	int	**fds;
@@ -26,6 +27,7 @@ int	**make_pipe_space(int size)
 	return (fds);
 }
 
+// cmd list free할 함수
 int	free_cmd_list(t_list *cmd)
 {
 	t_list	*tmp;
@@ -41,6 +43,7 @@ int	free_cmd_list(t_list *cmd)
 	return (OK);
 }
 
+// redirect list free할 함수
 int	free_redirect_list(t_list *redi)
 {
 	t_list	*tmp;

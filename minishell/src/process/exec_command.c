@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// 명령어가 빌트인 명령어인지 확인하는 함수
 static int	check_built_in(char *cmd)
 {
 	int	size;
@@ -34,6 +35,7 @@ static int	check_built_in(char *cmd)
 	return (0);
 }
 
+// 빌트인 명령어를 실행하는 함수
 static int	execute_built_in(char **cmd, t_env *env)
 {
 	int	size;
@@ -56,6 +58,7 @@ static int	execute_built_in(char **cmd, t_env *env)
 	return (OK);
 }
 
+// 명령어의 path를 찾아 만드는 함수
 static char	*create_new_path(char *path, char *cmd)
 {
 	int		size;
@@ -71,6 +74,7 @@ static char	*create_new_path(char *path, char *cmd)
 	return (result);
 }
 
+// 빌트인 명령어가 아닌 명령어를 실행하는 함수
 static int	execute_else(char **cmd, t_env *env)
 {
 	char	*path;
@@ -98,15 +102,18 @@ static int	execute_else(char **cmd, t_env *env)
 	return (ERR);
 }
 
+// 명령어를 실행하기 위한 함수
 int	command(char **cmd, t_env *env)
 {
 	int	is_built_in;
 
 	if (cmd == NULL)
 		exit(127);
+	// 빌트인 명령어라면 빌트인 명령어 실행 함수로 실행함
 	is_built_in = check_built_in(cmd[0]);
 	if (is_built_in)
 		return (execute_built_in(cmd, env));
+	// 아니라면 execve함수로 실행함
 	execute_else(cmd, env);
 	printf("bash: %s: command not found\n", cmd[0]);
 	exit(127);
