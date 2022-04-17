@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/17 16:45:48 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:22:12 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_redirect(t_list *redirect)
 	while (redi)
 	{
 		if (redi->next->split)
-			erro_message("ambiguous redirect\n", "redirect", NULL, 1);
+			exit(erro_message("ambiguous redirect\n", "redirect", NULL, 1));
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
@@ -71,7 +71,7 @@ int	input_redirect_exec(char *filename, int mode)
 		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
-		erro_message("No such file or directory\n", filename, NULL, 1);
+		exit(erro_message("No such file or directory\n", filename, NULL, 1));
 	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);
@@ -86,7 +86,7 @@ int	output_redirect_exec(char *filename, int mode)
 	else
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
-		erro_message("Outfile open error\n", NULL, NULL, 1);
+		exit(erro_message("Outfile open error\n", NULL, NULL, 1));
 	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);
