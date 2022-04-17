@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:04:36 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 16:33:31 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 14:22:22 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char	*env_substitude(char *value, char **key_env, int *i)
 	free(key_env);
 	return (new_v);
 }
-
 
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
 {

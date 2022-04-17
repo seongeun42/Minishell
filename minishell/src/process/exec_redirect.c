@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:00 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:20:55 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ int	input_redirect_exec(char *filename, int mode)
 		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
+	{
+		write(BACKUP_STDOUT, "SnS: ", 6);
+		write(BACKUP_STDOUT, filename, ft_strlen(filename));
+		write(BACKUP_STDOUT, ": No such file or directory\n", 29);
 		exit(ERR);
+	}
 	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);
@@ -89,7 +94,10 @@ int	output_redirect_exec(char *filename, int mode)
 	else
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
+	{
+		write(BACKUP_STDOUT, "SnS: Outfile open error\n", 25);
 		exit(ERR);
+	}
 	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);
