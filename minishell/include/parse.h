@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:10:55 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 17:56:11 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 17:18:14 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 // parse functions
 int		parsing(char *line, t_env *env, t_list *cmd, t_list *redi);
-int		parsing_err_message(char c);
+int		parsing_err_message(char c, char *line);
 int		last_chr_check(char *line);
 
 // line split functions

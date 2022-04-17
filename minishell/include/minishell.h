@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/17 16:56:03 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:25:08 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 char	*memory_fit(char *value);
 void	double_free(char **str);
 void	list_free(t_list **list);
-int	erro_message(char *m, char *cmd, char *content, int err);
+int		erro_message(char *m, char *cmd, char *content, int err);
 
 // signal
 void	set_signal(void);
