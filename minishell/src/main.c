@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/17 14:46:18 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 16:58:36 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	go_to_exec(char *str, t_list *cmd, t_list *redi, t_env *env)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	int		term;
 	char	*str;
 	t_env	*env;
 	t_list	*cmd;
@@ -111,6 +112,9 @@ int	main(int argc, char *argv[], char *envp[])
 			printf("exit\n");
 			break ;
 		}
+		term = 1000000;
+		while (term--)
+			;
 	}
-	return (0);
+	return (OK);
 }

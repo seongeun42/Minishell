@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:56:57 by seongele          #+#    #+#             */
-/*   Updated: 2022/03/27 19:49:31 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:08:02 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,18 @@ void	list_free(t_list **list)
 		free(delnode);
 	}
 	*list = 0;
+}
+
+int	erro_message(char *m, char *cmd, char *content, int err)
+{
+	write(2, "SnS: ", 6);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 3);
+	if (content)
+	{
+		write(2, content, ft_strlen(content));
+		write(2, ": ", 3);
+	}
+	write(2, m, ft_strlen(m));
+	return (err);
 }

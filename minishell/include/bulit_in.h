@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bulit_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:09:45 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 17:47:01 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 17:03:42 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	**env_get(t_env *env);
 // built in
 # define LL_MAX 9223372036854775807
 
-void	ft_env(t_env *start);
 void	ft_echo(char **cmd);
+int		ft_env(t_env *start);
 int		ft_export(t_env *start, char **str);
 int		ft_pwd(void);
 int		ft_exit(char **cmd);

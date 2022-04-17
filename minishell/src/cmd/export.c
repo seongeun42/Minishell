@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:03:14 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:14 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 17:08:37 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int	ft_export(t_env *start, char **str)
 		while (str[idx])
 		{
 			if (check_key(str[idx]))
-			{
-				flag = 1;
-				printf("SnS: export: '%s': not a valid identifier\n", str[idx]);
-			}
+				flag = erro_message("not a valid identifier\n",
+						"export", str[idx], 1);
 			else
 				cmd_insert_env_node(&start, str[idx]);
 			idx++;
