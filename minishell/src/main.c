@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:24:46 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 19:35:39 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:46:18 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ int	check_export_unset_exit(char **cmd, int size, t_env *env)
 		else if (!ft_strncmp("cd", cmd[0], 3))
 			g_err = ft_cd(env, cmd[1]);
 		else if (!ft_strncmp("exit", cmd[0], 5))
-			ft_exit(cmd);
+		{
+			printf("exit\n");
+			if (ft_exit(cmd) == OK)
+				exit(0);
+			else
+				g_err = 1;
+		}
 		else
 			return (-1);
 		return (g_err);
