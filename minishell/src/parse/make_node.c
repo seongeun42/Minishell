@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 18:04:36 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 16:33:31 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 14:22:22 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,66 @@ static void	make_node_flag_change(char c, t_flag *f, char *value, int *i)
 	}
 	else
 		value[(*i)++] = c;
+}
+
+t_list	*new_node(char *value, int split_flag)
+{
+	t_list	*node;
+
+	node = ft_lstnew(value);
+	if (split_flag)
+		node->split = 1;
+	return (node);
+}
+
+char	**env_find(char *line, t_env *env_list, int *start)
+{
+	int		i;
+	int		j;
+	char	**key_env;
+
+	i = *start;
+	while (line[*start] && line[*start] != ' '
+		&& line[*start] != '\'' && line[*start] != '"')
+		++(*start);
+	key_env = (char **)malloc(sizeof(char *) * 2);
+	key_env[0] = (char *)ft_calloc(*start - i, sizeof(char));
+	if (!key_env[0])
+		return (0);
+	j = -1;
+	while (++i < *start)
+		key_env[0][++j] = line[i];
+	key_env[0][++j] = 0;
+	key_env[1] = search_env(env_list, key_env[0]);
+	if (!ft_strncmp(key_env[0], "?", 3))
+		key_env[1] = ft_itoa(g_err);
+	*start -= 1;
+	return (key_env);
+}
+
+char	*env_substitude(char *value, char **key_env, int *i)
+{
+	char	*tmp;
+	char	*new_v;
+
+	tmp = key_env[1];
+	if (!tmp)
+		return (value);
+	else
+	{
+		new_v = (char *)ft_calloc(ft_strlen(value)
+				+ ft_strlen(key_env[1]) + 1, sizeof(char));
+		ft_strlcpy(new_v, value, *i + 1);
+		ft_strlcat(new_v, key_env[1],
+			ft_strlen(value) + ft_strlen(key_env[1]) * 2);
+		*i += ft_strlen(key_env[1]);
+		free(value);
+		if (!ft_strncmp(key_env[0], "?", 3))
+			free(key_env[1]);
+	}
+	free(key_env[0]);
+	free(key_env);
+	return (new_v);
 }
 
 t_list	*make_node(char *line, t_env *env_list, int start, int end)
@@ -59,64 +119,4 @@ t_list	*make_node(char *line, t_env *env_list, int start, int end)
 		++start;
 	}
 	return (new_node(memory_fit(value), node_split_flag));
-}
-
-t_list	*new_node(char *value, int split_flag)
-{
-	t_list	*node;
-
-	node = ft_lstnew(value);
-	if (split_flag)
-		node->split = 1;
-	return (node);
-}
-
-char	*env_substitude(char *value, char **key_env, int *i)
-{
-	char	*tmp;
-	char	*new_v;
-
-	tmp = key_env[1];
-	if (!tmp)
-		return (value);
-	else
-	{
-		new_v = (char *)ft_calloc(ft_strlen(value)
-				+ ft_strlen(key_env[1]) + 1, sizeof(char));
-		ft_strlcpy(new_v, value, *i + 1);
-		ft_strlcat(new_v, key_env[1],
-			ft_strlen(value) + ft_strlen(key_env[1]) * 2);
-		*i += ft_strlen(key_env[1]);
-		free(value);
-		if (!ft_strncmp(key_env[0], "?", 3))
-			free(key_env[1]);
-	}
-	free(key_env[0]);
-	free(key_env);
-	return (new_v);
-}
-
-char	**env_find(char *line, t_env *env_list, int *start)
-{
-	int		i;
-	int		j;
-	char	**key_env;
-
-	i = *start;
-	while (line[*start] && line[*start] != ' '
-		&& line[*start] != '\'' && line[*start] != '"')
-		++(*start);
-	key_env = (char **)malloc(sizeof(char *) * 2);
-	key_env[0] = (char *)ft_calloc(*start - i, sizeof(char));
-	if (!key_env[0])
-		return (0);
-	j = -1;
-	while (++i < *start)
-		key_env[0][++j] = line[i];
-	key_env[0][++j] = 0;
-	key_env[1] = search_env(env_list, key_env[0]);
-	if (!ft_strncmp(key_env[0], "?", 3))
-		key_env[1] = ft_itoa(g_err);
-	*start -= 1;
-	return (key_env);
 }

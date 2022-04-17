@@ -13,14 +13,8 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			*key;
-	char			*value;
-}	t_env;
-
-// flag struct
+/* parse */
+// parsing flag struct
 typedef struct s_flag
 {
 	int	env_chg;
@@ -29,6 +23,7 @@ typedef struct s_flag
 	int	smallq;
 }	t_flag;
 
+// parsing state struct
 typedef struct s_idx
 {
 	int	start;
@@ -37,6 +32,17 @@ typedef struct s_idx
 	int	pipe_close;
 }	t_idx;
 
+/* envp */
+// env struct
+typedef struct s_env
+{
+	struct s_env	*next;
+	char			*key;
+	char			*value;
+}	t_env;
+
+/* process */
+// cmd, redirect, env struct
 typedef struct s_cre
 {
 	t_list	*cmd;

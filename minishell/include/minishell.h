@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 06:16:20 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 17:54:40 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:25:06 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define ERR 1
 # define OK 0
+# define W 1
+# define R 0
 # define BACKUP_STDIN 100
 # define BACKUP_STDOUT 101
 

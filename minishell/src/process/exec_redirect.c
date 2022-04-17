@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:00 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:25:40 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int	heredoc(char *eof)
 		buf[size - 1] = 0;
 		if (ft_strncmp(buf, eof, ft_strlen(buf) + 1))
 		{
-			write(fd[1], buf, ft_strlen(buf));
-			write(fd[1], "\n", 1);
+			write(fd[W], buf, ft_strlen(buf));
+			write(fd[W], "\n", 1);
 		}
 		else
 			break ;
 	}
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	close(fd[W]);
+	dup2(fd[R], STDIN_FILENO);
+	close(fd[R]);
 	return (OK);
 }
 
@@ -74,7 +74,12 @@ int	input_redirect_exec(char *filename, int mode)
 		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
-		return (ERR);
+	{
+		write(BACKUP_STDOUT, "SnS: ", 6);
+		write(BACKUP_STDOUT, filename, ft_strlen(filename));
+		write(BACKUP_STDOUT, ": No such file or directory\n", 29);
+		exit(ERR);
+	}
 	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);
@@ -89,7 +94,10 @@ int	output_redirect_exec(char *filename, int mode)
 	else
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
+	{
+		write(BACKUP_STDOUT, "SnS: Outfile open error\n", 25);
 		exit(ERR);
+	}
 	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);
