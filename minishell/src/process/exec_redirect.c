@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/17 14:20:55 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 14:25:40 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int	heredoc(char *eof)
 		buf[size - 1] = 0;
 		if (ft_strncmp(buf, eof, ft_strlen(buf) + 1))
 		{
-			write(fd[1], buf, ft_strlen(buf));
-			write(fd[1], "\n", 1);
+			write(fd[W], buf, ft_strlen(buf));
+			write(fd[W], "\n", 1);
 		}
 		else
 			break ;
 	}
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	close(fd[W]);
+	dup2(fd[R], STDIN_FILENO);
+	close(fd[R]);
 	return (OK);
 }
 

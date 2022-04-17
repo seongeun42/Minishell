@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:31 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 17:27:02 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:26:15 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	parent(int pid, int fd[], int idx, int size)
 		waitpid(pid, &g_err, WNOHANG);
 	else
 		waitpid(pid, &g_err, 0);
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	close(fd[W]);
+	dup2(fd[R], STDIN_FILENO);
+	close(fd[R]);
 }
 
 void	child(t_cre *cre, int fd[], int idx, int size)
@@ -77,8 +77,8 @@ void	child(t_cre *cre, int fd[], int idx, int size)
 	set_signal_child();
 	if (idx < size - 1)
 		dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
+	close(fd[R]);
+	close(fd[W]);
 	exec_redirect((t_list *)cre->redi->content);
 	command((char **)cre->cmd->content, cre->env);
 }
