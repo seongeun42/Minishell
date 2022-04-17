@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 17:06:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:23 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 14:39:36 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_exit(char **cmd)
 	size = count_argu(cmd);
 	is_num = 1;
 	if (size == 1)
-		exit(0);
+		return (OK);
 	if (size >= 2)
 		is_num = argu_is_num(cmd[1]);
 	if (!is_num)
@@ -82,7 +82,7 @@ int	ft_exit(char **cmd)
 	if (size > 2)
 	{
 		printf("SnS: exit: too many arguments\n");
-		exit(1);
+		return (ERR);
 	}
 	result = ato_ll(cmd[1]);
 	if (result != -1)
