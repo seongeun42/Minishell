@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:01:29 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:33 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 17:03:55 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_env *start)
+int	ft_env(t_env *start)
 {
 	if (search_env(start, "PATH") == NULL)
-	{
-		printf("SnS: env: No such file or directory\n");
-		return ;
-	}
+		return (erro_message("No such file or directory\n", "env", NULL, 1));
 	display_env(start);
+	return (OK);
 }

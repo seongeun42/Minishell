@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:21:23 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/17 14:25:40 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 16:45:48 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int	exec_redirect(t_list *redirect)
 	while (redi)
 	{
 		if (redi->next->split)
-		{
-			printf("SnS: ambiguous redirect\n");
-			exit(ERR);
-		}
+			erro_message("ambiguous redirect\n", "redirect", NULL, 1);
 		if (!ft_strncmp((char *)redi->content, "<", 3))
 			input_redirect_exec((char *)redi->next->content, 1);
 		else if (!ft_strncmp((char *)redi->content, "<<", 4))
@@ -74,12 +71,7 @@ int	input_redirect_exec(char *filename, int mode)
 		return (heredoc(filename));
 	in = open(filename, O_RDONLY);
 	if (in == -1)
-	{
-		write(BACKUP_STDOUT, "SnS: ", 6);
-		write(BACKUP_STDOUT, filename, ft_strlen(filename));
-		write(BACKUP_STDOUT, ": No such file or directory\n", 29);
-		exit(ERR);
-	}
+		erro_message("No such file or directory\n", filename, NULL, 1);
 	dup2(in, STDIN_FILENO);
 	close(in);
 	return (OK);
@@ -94,10 +86,7 @@ int	output_redirect_exec(char *filename, int mode)
 	else
 		out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (out == -1)
-	{
-		write(BACKUP_STDOUT, "SnS: Outfile open error\n", 25);
-		exit(ERR);
-	}
+		erro_message("Outfile open error\n", NULL, NULL, 1);
 	dup2(out, STDOUT_FILENO);
 	close(out);
 	return (OK);

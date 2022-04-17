@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sujo <sujo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 15:05:19 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/10 19:03:57 by sujo             ###   ########.fr       */
+/*   Updated: 2022/04/17 17:02:52 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ static int	update_cd(int result, t_env *start, char *old_path, char *origin)
 	}
 	else
 	{
-		if (check_is_file(origin))
-			printf("SnS: cd: %s: Not a directory\n", origin);
-		else
-			printf("SnS: cd: %s: No such file or directory\n", origin);
 		free(old_path);
+		if (check_is_file(origin))
+			erro_message("Not a directory\n", "cd", origin, 1);
+		else
+			erro_message("No such file or directory\n", "cd", origin, 1);
 		return (ERR);
 	}
 }
@@ -97,9 +97,8 @@ int	ft_cd(t_env *start, char *path)
 		new_path = search_env(start, "HOME");
 		if (new_path == NULL)
 		{
-			printf("SnS: cd: HOME not set\n");
 			free(old_path);
-			return (ERR);
+			erro_message("HOME not set\n", "cd", NULL, 1);
 		}
 		result = chdir(new_path);
 	}

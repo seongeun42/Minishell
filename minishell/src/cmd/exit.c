@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 17:06:16 by sujo              #+#    #+#             */
-/*   Updated: 2022/04/17 14:39:36 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:01:04 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,11 @@ int	ft_exit(char **cmd)
 	if (size >= 2)
 		is_num = argu_is_num(cmd[1]);
 	if (!is_num)
-	{
-		printf("SnS: exit: %s: numeric argument required\n", cmd[1]);
-		exit(255);
-	}
+		exit(erro_message("numeric argument required\n", "exit", cmd[1], 255));
 	if (size > 2)
-	{
-		printf("SnS: exit: too many arguments\n");
-		return (ERR);
-	}
+		return (erro_message("too many arguments\n", "exit", NULL, 1));
 	result = ato_ll(cmd[1]);
 	if (result != -1)
 		exit(result);
-	printf("SnS: exit: %s: numeric argument required\n", cmd[1]);
-	exit(255);
+	exit(erro_message("numeric argument required\n", "exit", cmd[1], 255));
 }

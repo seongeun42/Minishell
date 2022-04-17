@@ -6,7 +6,7 @@
 /*   By: seongele <seongele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:33:34 by seongele          #+#    #+#             */
-/*   Updated: 2022/04/10 16:44:57 by seongele         ###   ########.fr       */
+/*   Updated: 2022/04/17 17:03:31 by seongele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	execute_built_in(char **cmd, t_env *env)
 	if (!ft_strncmp("echo", cmd[0], size))
 		ft_echo(cmd);
 	if (!ft_strncmp("env", cmd[0], size))
-		ft_env(env);
+		return (ft_env(env));
 	if (!ft_strncmp("export", cmd[0], size))
 		return (ft_export(env, cmd));
 	if (!ft_strncmp("pwd", cmd[0], size))
@@ -106,8 +106,8 @@ int	command(char **cmd, t_env *env)
 		exit(127);
 	is_built_in = check_built_in(cmd[0]);
 	if (is_built_in)
-		return (execute_built_in(cmd, env));
+		exit(execute_built_in(cmd, env));
 	execute_else(cmd, env);
-	printf("bash: %s: command not found\n", cmd[0]);
+	erro_message("command not found\n", cmd[0], NULL, 127);
 	exit(127);
 }
